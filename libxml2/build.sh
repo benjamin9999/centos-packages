@@ -1,5 +1,5 @@
 #!/bin/bash
-WORKDIR=`pwd`
+workdir=`pwd`
 
 pkgname=rqdq-libxml2
 pkgver=2.9.2
@@ -12,14 +12,14 @@ prefix="opt/rqdq"
 fetch() {
     wget -c ${sources[0]}
     cd $srcdir
-    tar xzf "${WORKDIR}/libxml2-${pkgver}.tar.gz"
+    tar xzf "${workdir}/libxml2-${pkgver}.tar.gz"
     patch -p1 < fix-duplicate-qname-message.patch
 }
 
 
 build() {
     cd ${srcdir}/libxml2-${pkgver}/
-    PYTHON=/${prefix}/bin/python2.7 ./configure --prefix=/${prefix}
+    ./configure --prefix=/${prefix} --with-python=/${prefix}/bin/python
     make -j2
 }
 
@@ -29,7 +29,7 @@ package() {
     mkdir -p "${pkgdir}/etc/ld.so.conf.d"
     echo "/${prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
 
-    cd $WORKDIR
+    cd $workdir
 
     fpm -s dir -t rpm \
         -n "${pkgname}" \
@@ -38,7 +38,7 @@ package() {
         -v "${pkgver}" \
 	--iteration $pkgrel \
         --rpm-user root --rpm-group root \
-	--post-install ./${pkgname}.postinstall \
+	--after-install "${workdir}/${pkgname}.postinstall" \
         ${prefix}/bin/xmlcatalog \
 	${prefix}/bin/xmllint \
 	${prefix}/lib/libxml2.so.2 \
@@ -95,8 +95,8 @@ then
 fi
 
 mkdir -p pkg src
-srcdir="$WORKDIR/src"
-pkgdir="$WORKDIR/pkg"
+srcdir="$workdir/src"
+pkgdir="$workdir/pkg"
 
 if [ "$1" == "install" ]; then
     install

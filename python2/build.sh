@@ -1,5 +1,5 @@
 #!/bin/bash
-WORKDIR=`pwd`
+workdir=`pwd`
 
 pkgname=rqdq-python2
 pkgver=2.7.10
@@ -12,7 +12,7 @@ prefix="opt/rqdq"
 fetch() {
     wget -c ${sources[0]}
     cd $srcdir
-    tar xzf "${WORKDIR}/Python-${pkgver}.tgz"
+    tar xzf "${workdir}/Python-${pkgver}.tgz"
 }
 
 
@@ -28,7 +28,7 @@ package() {
     mkdir -p "${pkgdir}/etc/ld.so.conf.d"
     echo "/${prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
 
-    cd $WORKDIR
+    cd $workdir
 
     fpm -s dir -t rpm \
         -n "${pkgname}" \
@@ -54,7 +54,7 @@ package() {
         -v "${pkgver}" \
 	--iteration $pkgrel \
         --rpm-user root --rpm-group root \
-	--post-install ./${pkgname}.postinstall \
+	--after-install "${workdir}/${pkgname}.postinstall" \
 	etc \
 	${prefix}/include/python2.7/pyconfig.h \
 	${prefix}/lib/libpython2.7.so.1.0 \
@@ -75,8 +75,8 @@ package() {
 
 install() {
     yum -y install \
-        "${pkgname}-${pkgver}-libs-${pkgrel}.x86_64.rpm" \
-        "${pkgname}-${pkgver}-devel-${pkgrel}.x86_64.rpm" \
+        "${pkgname}-libs-${pkgver}-${pkgrel}.x86_64.rpm" \
+        "${pkgname}-devel-${pkgver}-${pkgrel}.x86_64.rpm" \
         "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
 }
 
@@ -95,8 +95,8 @@ then
 fi
 
 mkdir -p pkg src
-srcdir="$WORKDIR/src"
-pkgdir="$WORKDIR/pkg"
+srcdir="$workdir/src"
+pkgdir="$workdir/pkg"
 
 if [ "$1" == "install" ]; then
     install

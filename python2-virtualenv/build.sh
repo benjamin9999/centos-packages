@@ -26,12 +26,13 @@ package() {
 	-d "rqdq-python2-setuptools >= 18.3.2" \
 	--iteration $pkgrel \
 	--python-bin /${prefix}/bin/python \
+	--python-easyinstall /${prefix}/bin/easy_install \
 	virtualenv
 }
 
 install() {
     yum -y install \
-        "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+        "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
 }
 
 

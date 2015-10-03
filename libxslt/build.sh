@@ -1,5 +1,5 @@
 #!/bin/bash
-WORKDIR=`pwd`
+workdir=`pwd`
 
 pkgname=rqdq-libxslt
 pkgver=1.1.28
@@ -12,13 +12,13 @@ prefix="opt/rqdq"
 fetch() {
     wget -c ${sources[0]}
     cd $srcdir
-    tar xzf "${WORKDIR}/libxslt-${pkgver}.tar.gz"
+    tar xzf "${workdir}/libxslt-${pkgver}.tar.gz"
 }
 
 
 build() {
     cd ${srcdir}/libxslt-${pkgver}/
-    PYTHON=/${prefix}/bin/python2.7 ./configure --prefix=/${prefix}
+    ./configure --prefix=/${prefix} --with-python=/${prefix}/bin/python --with-libxml-prefix=/${prefix}
     make -j2
 }
 
@@ -28,7 +28,7 @@ package() {
     mkdir -p "${pkgdir}/etc/ld.so.conf.d"
     echo "/${prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
 
-    cd $WORKDIR
+    cd $workdir
 
     fpm -s dir -t rpm \
         -n "${pkgname}" \
@@ -38,6 +38,7 @@ package() {
         -v "${pkgver}" \
 	--iteration $pkgrel \
         --rpm-user root --rpm-group root \
+	--after-install "${workdir}/${pkgname}.postinstall" \
         ${prefix}/bin/xsltproc \
         ${prefix}/lib/libexslt.so.0 \
         ${prefix}/lib/libexslt.so.0.8.17 \
@@ -96,8 +97,8 @@ then
 fi
 
 mkdir -p pkg src
-srcdir="$WORKDIR/src"
-pkgdir="$WORKDIR/pkg"
+srcdir="$workdir/src"
+pkgdir="$workdir/pkg"
 
 if [ "$1" == "install" ]; then
     install

@@ -25,12 +25,13 @@ package() {
 	-d "rqdq-python2-libs >= 2.7.10" \
 	--iteration $pkgrel \
 	--python-bin /${prefix}/bin/python \
+	--python-easyinstall /${prefix}/bin/easy_install \
 	setuptools
 }
 
 install() {
     yum -y install \
-        "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+        "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
 }
 
 
