@@ -1,0 +1,7 @@
+[rqdq-centos]
+name=rqdq centos-$releasever - packages for $basearch
+baseurl=http://download.rqdq.com/CentOS/$releasever/$basearch
+enabled=1
+gpgcheck=0
+protect=1
+
