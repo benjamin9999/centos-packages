@@ -83,8 +83,6 @@ install() {
 
 if [ ${#makedepends[@]} -ne 0 ];
 then
-
-    echo rpm -q ${makedepends[@]}
     depout=`rpm -q ${makedepends[@]}`
     if [ "$?" -ne 0 ];
     then
