@@ -1,0 +1,56 @@
+diff --git a/Jamsettings b/Jamsettings
+index 6ad07ee..114c295 100644
+--- a/Jamsettings
++++ b/Jamsettings
+@@ -12,7 +12,7 @@ INSTALLROOT ?= "" ;
+ 
+ # A convenient prefix used by most directory and file names,.
+ #
+-PREFIX ?= /usr/local/archiveopteryx ;
++PREFIX ?= /usr ;
+ 
+ # The directory for user and sysadmin tools
+ #
+@@ -24,11 +24,11 @@ SBINDIR = $(PREFIX)/sbin ;
+ 
+ # The directory where the man pages are installed
+ #
+-MANDIR = $(PREFIX)/man ;
++MANDIR = $(PREFIX)/share/man ;
+ 
+ # Supporting files
+ #
+-LIBDIR = $(PREFIX)/lib ;
++LIBDIR = $(PREFIX)/lib/archiveopteryx ;
+ 
+ # The startup/shutdown script's directory
+ #
+@@ -36,12 +36,12 @@ INITDIR = $(LIBDIR) ;
+ 
+ # Where to write pid files for the servers
+ #
+-PIDFILEDIR ?= $(PREFIX)/lib/pidfiles ;
++PIDFILEDIR ?= /var/run/aox ;
+ 
+ # The servers chroot to an empty, unreadable jail directory at
+ # startup.
+ #
+-JAILDIR = $(PREFIX)/jail ;
++JAILDIR = /var/run/aox/jail ;
+ 
+ # This is the default message-copy-directory.
+ #
+@@ -49,11 +49,11 @@ MESSAGEDIR = $(JAILDIR)/messages ;
+ 
+ # The directory where the configuration file is located.
+ #
+-CONFIGDIR = $(PREFIX) ;
++CONFIGDIR = /etc ;
+ 
+ # The directory where the README and other files are installed.
+ #
+-READMEDIR = $(PREFIX) ;
++READMEDIR = /usr/share/doc/archiveopteryx ;
+ 
+ # The log file's default name. (This can be a file name or syslog/x,
+ # where x is a facility.)
