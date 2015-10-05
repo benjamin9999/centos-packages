@@ -24,7 +24,7 @@ package() {
     mkdir -p $pkgdir/opt
     mkdir -p $pkgdir/usr/bin
     cp -a * $pkgdir/opt/
-    ln -sfn pycharm-4.5.3 $pkgdir/opt/pycharm
+    ln -sfn pycharm-${pkgver} $pkgdir/opt/pycharm
     ln -sfn /opt/pycharm/bin/pycharm.sh $pkgdir/usr/bin/pycharm
     
     cd $workdir
