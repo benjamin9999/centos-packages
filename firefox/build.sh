@@ -1,7 +1,7 @@
 #!/bin/bash
 workdir=`pwd`
 
-pkgname=firefox
+pkgname=rqdq-firefox
 pkgver=41.0.1
 pkgrel=1
 makedepends=()
