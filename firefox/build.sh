@@ -32,6 +32,7 @@ package() {
         -n "${pkgname}" \
         -C "${pkgdir}" \
         -v "${pkgver}" \
+	-d "dbus-x11" \
 	--iteration $pkgrel \
 	--rpm-user root --rpm-group root \
 	--directories /opt/firefox-${pkgver} \
