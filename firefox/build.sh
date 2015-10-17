@@ -28,7 +28,7 @@ package() {
     ln -sfn /opt/firefox/firefox $pkgdir/usr/bin/firefox
     
     cd $workdir
-    fpm -s dir -t rpm -e \
+    fpm -s dir -t rpm \
         -n "${pkgname}" \
         -C "${pkgdir}" \
         -v "${pkgver}" \

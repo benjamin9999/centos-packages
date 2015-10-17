@@ -32,7 +32,7 @@ package() {
 #        -d "${pkgname}-libs == ${pkgver}-${pkgrel}" \
 #	--rpm-attr '0701,aox,aox:/var/run/aox' \
 
-    fpm -s dir -t rpm -e \
+    fpm -s dir -t rpm \
         -n "${pkgname}" \
         -C "${pkgdir}" \
         -v "${pkgver}" \

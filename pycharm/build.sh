@@ -28,7 +28,7 @@ package() {
     ln -sfn /opt/pycharm/bin/pycharm.sh $pkgdir/usr/bin/pycharm
     
     cd $workdir
-    fpm -s dir -t rpm -e \
+    fpm -s dir -t rpm \
         -n "${pkgname}" \
         -C "${pkgdir}" \
         -v "${pkgver}" \
