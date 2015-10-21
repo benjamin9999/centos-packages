@@ -1,0 +1,19 @@
+pkgname=rqdq-python2-setuptools
+pkgver=18.3.2
+pkgrel=1
+makedepends=()
+source=()
+
+prefix="opt/rqdq"
+
+package() {
+  fpmx_python "$pkgname" \
+    -d "rqdq-python2-libs >= 2.7.10" \
+    --python-bin /${prefix}/bin/python \
+    --python-easyinstall /${prefix}/bin/easy_install \
+    setuptools
+}
+
+root_install() {
+  yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
+}

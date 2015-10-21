@@ -1,0 +1,36 @@
+pkgname=rqdq-font-dina
+pkgver=2.92
+pkgrel=1
+makedepends=('xorg-x11-font-utils')
+source=(https://www.donationcoder.com/Software/Jibz/Dina/downloads/Dina.zip \
+        after-install)
+md5sums=('028424baac750e9fd0f54df03202e5d0'
+         '7b10fc7803853ac405dcd4ff17b603f2')
+
+build() {
+    mkdir build
+    cd BDF
+    for bdf_source in *.bdf; do
+        bdftopcf -o "${srcdir}/build/${bdf_source%.bdf}.pcf" "$bdf_source"
+    done
+}
+
+package() {
+  mkdir -p "${pkgdir}/etc/X11/fontpath.d"
+  mkdir -p "${pkgdir}/usr/share/fonts/dina"
+  cp "${srcdir}/build"/* "${pkgdir}/usr/share/fonts/dina/"
+  ln -sfn /usr/share/fonts/dina "${pkgdir}/etc/X11/fontpath.d/dina"
+  cd "${pkgdir}/usr/share/fonts/dina"
+  mkfontdir
+
+  fpmx "$pkgname" \
+    -a all \
+    --rpm-user root --rpm-group root \
+    --after-install "${srcdir}/after-install" \
+    --directories usr/share/fonts/dina \
+    usr etc
+}
+
+root_install() {
+  yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
+}

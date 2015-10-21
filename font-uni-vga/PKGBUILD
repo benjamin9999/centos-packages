@@ -1,0 +1,35 @@
+pkgname=rqdq-font-uni-vga
+pkgver=1.0
+pkgrel=1
+makedepends=('xorg-x11-font-utils')
+source=(http://www.inp.nsk.su/~bolkhov/files/fonts/univga/uni-vga.tgz \
+        after-install)
+md5sums=('60fbba53cb0efec1363fcc5fb8c244d9'
+         '7b10fc7803853ac405dcd4ff17b603f2')
+
+build() {
+    cd uni_vga
+    for bdf_source in *.bdf; do
+        bdftopcf -o "${bdf_source%.bdf}.pcf" "$bdf_source"
+    done
+}
+
+package() {
+  mkdir -p "${pkgdir}/etc/X11/fontpath.d"
+  mkdir -p "${pkgdir}/usr/share/fonts/uni_vga"
+  cp "${srcdir}/uni_vga"/*.pcf "${pkgdir}/usr/share/fonts/uni_vga/"
+  ln -sfn /usr/share/fonts/uni_vga "${pkgdir}/etc/X11/fontpath.d/uni_vga"
+  cd "${pkgdir}/usr/share/fonts/uni_vga"
+  mkfontdir
+
+  fpmx "$pkgname" \
+    -a all \
+    --rpm-user root --rpm-group root \
+    --after-install $workdir/after-install \
+    --directories usr/share/fonts/uni_vga \
+    usr etc
+}
+
+root_install() {
+    yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
+}

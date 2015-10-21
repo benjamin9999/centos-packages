@@ -1,0 +1,26 @@
+pkgname=autocutsel
+pkgver=0.10.0
+pkgrel=1
+makedepends=(libXaw-devel)
+source=(https://github.com/sigmike/autocutsel/releases/download/${pkgver}/autocutsel-${pkgver}.tar.gz)
+md5sums=('7d5b96e5f7b79b883d8350f104043366')
+
+build() {
+  cd "autocutsel-${pkgver}"
+  ./configure --prefix=/usr
+  make -j2
+}
+
+package() {
+  cd "autocutsel-${pkgver}"
+  DESTDIR="${pkgdir}" make install
+
+  fpmx "${pkgname}" \
+    -d "libXaw" \
+    --rpm-user root --rpm-group root \
+    usr
+}
+
+root_install() {
+  sudo yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+}

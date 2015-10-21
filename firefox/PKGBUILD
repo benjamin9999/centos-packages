@@ -1,0 +1,24 @@
+pkgname=rqdq-firefox
+pkgver=41.0.2
+pkgrel=1
+makedepends=()
+source=(https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest/linux-x86_64/en-US/firefox-${pkgver}.tar.bz2)
+md5sums=('f1e857e49d05e8d2df5c6df5a31f8053')
+
+package() {
+  mkdir -p "${pkgdir}/opt/firefox-${pkgver}"
+  mkdir -p "${pkgdir}/usr/bin"
+  cp -a firefox/* "${pkgdir}/opt/firefox-${pkgver}"
+  ln -sfn "firefox-${pkgver}" "${pkgdir}/opt/firefox"
+  ln -sfn /opt/firefox/firefox "${pkgdir}/usr/bin/firefox"
+    
+  fpmx "$pkgname" \
+    -d "dbus-x11" \
+    --rpm-user root --rpm-group root \
+    --directories /opt/firefox-${pkgver} \
+    opt usr
+}
+
+root_install() {
+  yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+}

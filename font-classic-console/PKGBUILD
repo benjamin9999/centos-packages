@@ -1,0 +1,26 @@
+pkgname=rqdq-font-classic-console
+pkgver=1.0
+pkgrel=1
+makedepends=()
+source=(http://webdraft.hu/fonts/classic-console/fonts/clacon.ttf \
+	after-install)
+md5sums=('f2f97095d1105880c85067557fb1e311'
+         '7b10fc7803853ac405dcd4ff17b603f2')
+
+package() {
+  mkdir -p "${pkgdir}/etc/X11/fontpath.d"
+  mkdir -p "${pkgdir}/usr/share/fonts/classic-console"
+  cp "${srcdir}/clacon.ttf" "${pkgdir}/usr/share/fonts/classic-console/"
+  ln -sfn /usr/share/fonts/classic-console "${pkgdir}/etc/X11/fontpath.d/classic-console"
+
+  fpmx "$pkgname" \
+    -a all \
+    --rpm-user root --rpm-group root \
+    --after-install $workdir/after-install \
+    --directories usr/share/fonts/classic-console \
+    usr etc
+}
+
+root_install() {
+    yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
+}

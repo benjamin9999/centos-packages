@@ -1,0 +1,69 @@
+pkgname=rqdq-libxml2
+pkgver=2.9.2
+pkgrel=2
+makedepends=('zlib-devel' 'rqdq-python2-devel')
+source=(ftp://xmlsoft.org/libxml2/libxml2-${pkgver}.tar.gz \
+        fix-duplicate-qname-message.patch \
+	after-install)
+md5sums=('9e6a9aca9d155737868b3dc5fd82f788'
+         'a143a60f05d3c2c326270aa4ab01fa1e'
+         '06e7640ea97c5d0cf76467a78956b414')
+
+prefix="opt/rqdq"
+
+prepare() {
+  cd "libxml2-${pkgver}"
+  patch -p1 < "${srcdir}/fix-duplicate-qname-message.patch"
+}
+
+build() {
+  cd "libxml2-${pkgver}"
+  ./configure --prefix=/$prefix --with-python=/${prefix}/bin/python
+  make -j2
+}
+
+package() {
+  cd "libxml2-${pkgver}"
+  DESTDIR="$pkgdir" make install
+  mkdir -p "${pkgdir}/etc/ld.so.conf.d"
+  echo "/${prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
+
+  fpmx "$pkgname" \
+    -d "zlib >= 1.2.3" \
+    --rpm-user root --rpm-group root \
+    --after-install "${srcdir}/after-install" \
+    ${prefix}/bin/xmlcatalog \
+    ${prefix}/bin/xmllint \
+    ${prefix}/lib/libxml2.so.2 \
+    ${prefix}/lib/libxml2.so.2.9.2 \
+    ${prefix}/share/man/man1/xmlcatalog.1 \
+    ${prefix}/share/man/man1/xmllint.1 \
+    ${prefix}/share/man/man3
+
+  fpmx "${pkgname}-devel" \
+    -d "${pkgname} == ${pkgver}-${pkgrel}" \
+    --rpm-user root --rpm-group root \
+    ${prefix}/bin/xml2-config \
+    ${prefix}/include/libxml2 \
+    ${prefix}/lib/libxml2.so \
+    ${prefix}/lib/pkgconfig \
+    ${prefix}/lib/xml2Conf.sh \
+    ${prefix}/share/aclocal/libxml.m4 \
+    ${prefix}/share/doc/libxml2-2.9.2 \
+    ${prefix}/share/gtk-doc \
+    ${prefix}/share/man/man1/xml2-config.1
+
+  fpmx "${pkgname}-python" \
+    -d "${pkgname} == ${pkgver}-${pkgrel}" \
+    -d "rqdq-python2-libs >= 2.7.10" \
+    --rpm-user root --rpm-group root \
+    ${prefix}/lib/python2.7 \
+    ${prefix}/share/doc/libxml2-python-2.9.2
+}
+
+root_install() {
+  yum -y install \
+    "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm" \
+    "${pkgname}-devel-${pkgver}-${pkgrel}.x86_64.rpm" \
+    "${pkgname}-python-${pkgver}-${pkgrel}.x86_64.rpm"
+}

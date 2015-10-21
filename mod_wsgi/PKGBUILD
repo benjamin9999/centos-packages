@@ -1,0 +1,29 @@
+pkgname=rqdq-mod_wsgi
+pkgver=4.4.13
+pkgrel=1
+makedepends=('httpd-devel' 'rqdq-python2-devel')
+source=(https://github.com/GrahamDumpleton/mod_wsgi/archive/${pkgver}.tar.gz)
+md5sums=('69de4d90e1c47ca66ca227b009332a76')
+
+prefix="opt/rqdq"
+
+build() {
+  cd "mod_wsgi-${pkgver}"
+  ./configure --with-python=/${prefix}/bin/python
+  make -j2
+}
+
+package() {
+  cd "mod_wsgi-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+
+  fpmx "$pkgname" \
+    -d "rqdq-python2-libs == 2.7.10" \
+    -d "httpd == 2.2.15" \
+    --rpm-user root --rpm-group root \
+    usr
+}
+
+root_install() {
+  yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+}

@@ -1,0 +1,38 @@
+pkgname=archiveopteryx
+pkgver=3.2.0.1
+pkgrel=1
+makedepends=('jam')
+source=(archiveopteryx::git+https://github.com/aox/aox \
+        Jamsettings.patch)
+md5sums=('SKIP'
+         'fbff2c7ff665ede955436b643dcd98e3')
+ 
+prepare() {
+  cd "$pkgname"
+  patch -p1 < $srcdir/Jamsettings.patch
+}
+
+build() {
+  cd "$pkgname"
+  jam
+}
+
+package() {
+  cd "$pkgname"
+  INSTALLROOT="$pkgdir" jam install
+
+#        -d "${pkgname}-libs == ${pkgver}-${pkgrel}" \
+# --rpm-attr '0701,aox,aox:/var/run/aox' \
+
+  fpmx "$pkgname" \
+    --rpm-use-file-permissions \
+    --rpm-user root --rpm-group root \
+    --directories /var/run/aox \
+    --directories /usr/lib/archiveopteryx \
+    --directories /usr/share/doc/archiveopteryx \
+    usr var
+}
+
+root_install() {
+  yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+}

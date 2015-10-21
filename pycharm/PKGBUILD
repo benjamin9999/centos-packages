@@ -1,0 +1,24 @@
+pkgname=pycharm
+pkgver=4.5.4
+pkgrel=1
+makedepends=()
+source=(http://download-cf.jetbrains.com/python/pycharm-professional-${pkgver}.tar.gz)
+md5sums=('5a6c36ee027087b15204aedeed98bbd2')
+
+package() {
+  mkdir -p $pkgdir/opt
+  mkdir -p $pkgdir/usr/bin
+  cp -a * $pkgdir/opt/
+  ln -sfn pycharm-${pkgver} $pkgdir/opt/pycharm
+  ln -sfn /opt/pycharm/bin/pycharm.sh $pkgdir/usr/bin/pycharm
+    
+  fpmx "$pkgname" \
+    -d "java-1.8.0-openjdk" \
+    --rpm-user root --rpm-group root \
+    --directories /opt/pycharm-${pkgver} \
+    opt usr
+}
+
+root_install() {
+    yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+}
