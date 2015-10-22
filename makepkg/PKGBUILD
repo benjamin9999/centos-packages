@@ -1,0 +1,22 @@
+pkgname=makepkg
+pkgver=4.2.1
+pkgrel=1
+makedepends=()
+arch=('any')
+source=(makepkg::git+https://github.com/benjamin9999/makepkg)
+md5sums=('SKIP')
+
+package() {
+  mkdir -p "${pkgdir}/etc"
+  install -m 0644 makepkg/makepkg.conf "${pkgdir}/etc/"
+
+  mkdir -p "${pkgdir}/usr/bin"
+  install -m 0755 makepkg/makepkg.sh "${pkgdir}/usr/bin/makepkg"
+
+  fpmx "${pkgname}" \
+    --rpm-user root --rpm-group root
+}
+
+root_install() {
+  yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
+}
