@@ -1,17 +1,24 @@
 pkgname=rqdq-python2-setuptools
 pkgver=18.3.2
 pkgrel=1
+_libname=setuptools
+_prefix="opt/rqdq"
 makedepends=()
-source=()
+arch=('any')
+source=(http://pypi.python.org/packages/source/${_libname:0:1}/$_libname/$_libname-$pkgver.tar.gz)
+md5sums=('d30c969065bd384266e411c446a86623')
 
-prefix="opt/rqdq"
+build() {
+  cd "$srcdir/$_libname-$pkgver"
+  /$_prefix/bin/python setup.py build
+}
 
 package() {
-  fpmx_python "$pkgname" \
-    -d "rqdq-python2-libs >= 2.7.10" \
-    --python-bin /${prefix}/bin/python \
-    --python-easyinstall /${prefix}/bin/easy_install \
-    setuptools
+  cd "$srcdir/$_libname-$pkgver"
+  /$_prefix/bin/python setup.py install --skip-build -O1 --root="$pkgdir"
+
+  fpmx "$pkgname" \
+    -d "rqdq-python2-libs >= 2.7.10"
 }
 
 root_install() {
