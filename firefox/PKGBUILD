@@ -1,6 +1,7 @@
 pkgname=rqdq-firefox
 pkgver=41.0.2
 pkgrel=1
+depends=('dbus-x11')
 makedepends=()
 source=(https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest/linux-x86_64/en-US/firefox-${pkgver}.tar.bz2)
 md5sums=('f1e857e49d05e8d2df5c6df5a31f8053')
@@ -13,7 +14,6 @@ package() {
   ln -sfn /opt/firefox/firefox "${pkgdir}/usr/bin/firefox"
     
   fpmx "$pkgname" \
-    -d "dbus-x11" \
     --rpm-user root --rpm-group root \
     --directories /opt/firefox-${pkgver} \
     opt usr

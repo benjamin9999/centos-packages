@@ -21,8 +21,8 @@ package() {
   mkdir -p "${pkgdir}/etc/ld.so.conf.d"
   echo "/${prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
 
+  depends=("${pkgname}-libs==${pkgver}-${pkgrel}")
   fpmx "${pkgname}" \
-    -d "${pkgname}-libs == ${pkgver}-${pkgrel}" \
     --rpm-user root --rpm-group root \
     ${prefix}/bin/pydoc \
     ${prefix}/bin/python \
@@ -30,12 +30,8 @@ package() {
     ${prefix}/bin/python2.7 \
     ${prefix}/share/man
   
+  depends=('zlib' 'openssl', 'libffi' 'readline' 'bzip2')
   fpmx "${pkgname}-libs" \
-    -d "zlib >= 1.2.3" \
-    -d "openssl >= 1.0.1" \
-    -d "libffi >= 3.0.5" \
-    -d "readline >= 6.0" \
-    -d "bzip2 >= 1.0.5" \
     --rpm-user root --rpm-group root \
     --after-install "${srcdir}/after-install" \
     etc \
@@ -43,8 +39,8 @@ package() {
     ${prefix}/lib/libpython2.7.so.1.0 \
     ${prefix}/lib/python2.7
   
+  depends=("${pkgname}-libs==${pkgver}-${pkgrel}")
   fpmx "${pkgname}-devel" \
-    -d "${pkgname}-libs == ${pkgver}-${pkgrel}" \
     --rpm-user root --rpm-group root \
     ${prefix}/bin/python-config \
     ${prefix}/bin/python2.7-config \

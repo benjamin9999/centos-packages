@@ -1,7 +1,8 @@
 pkgname=archiveopteryx
 pkgver=3.2.0.1
 pkgrel=1
-makedepends=('jam')
+depends=('openssl' 'zlib')
+makedepends=('jam' 'openssl-devel' 'zlib-devel')
 source=(archiveopteryx::git+https://github.com/aox/aox \
         Jamsettings.patch)
 md5sums=('SKIP'

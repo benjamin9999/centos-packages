@@ -3,6 +3,7 @@ pkgver=18.3.2
 pkgrel=1
 _libname=setuptools
 _prefix="opt/rqdq"
+depends=('rqdq-python2-libs>=2.7.10')
 makedepends=()
 arch=('any')
 source=(http://pypi.python.org/packages/source/${_libname:0:1}/$_libname/$_libname-$pkgver.tar.gz)
@@ -16,9 +17,7 @@ build() {
 package() {
   cd "$srcdir/$_libname-$pkgver"
   /$_prefix/bin/python setup.py install --skip-build -O1 --root="$pkgdir"
-
-  fpmx "$pkgname" \
-    -d "rqdq-python2-libs >= 2.7.10"
+  fpmx "$pkgname"
 }
 
 root_install() {

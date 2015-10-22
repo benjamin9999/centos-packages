@@ -1,6 +1,7 @@
 pkgname=autocutsel
 pkgver=0.10.0
 pkgrel=1
+depends=('libXaw')
 makedepends=(libXaw-devel)
 source=(https://github.com/sigmike/autocutsel/releases/download/${pkgver}/autocutsel-${pkgver}.tar.gz)
 md5sums=('7d5b96e5f7b79b883d8350f104043366')
@@ -16,7 +17,6 @@ package() {
   DESTDIR="${pkgdir}" make install
 
   fpmx "${pkgname}" \
-    -d "libXaw" \
     --rpm-user root --rpm-group root \
     usr
 }

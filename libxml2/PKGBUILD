@@ -28,8 +28,8 @@ package() {
   mkdir -p "${pkgdir}/etc/ld.so.conf.d"
   echo "/${prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
 
+  depends=('zlib')
   fpmx "$pkgname" \
-    -d "zlib >= 1.2.3" \
     --rpm-user root --rpm-group root \
     --after-install "${srcdir}/after-install" \
     ${prefix}/bin/xmlcatalog \
@@ -40,8 +40,8 @@ package() {
     ${prefix}/share/man/man1/xmllint.1 \
     ${prefix}/share/man/man3
 
+  depends=("${pkgname}==${pkgver}-${pkgrel}")
   fpmx "${pkgname}-devel" \
-    -d "${pkgname} == ${pkgver}-${pkgrel}" \
     --rpm-user root --rpm-group root \
     ${prefix}/bin/xml2-config \
     ${prefix}/include/libxml2 \
@@ -53,9 +53,8 @@ package() {
     ${prefix}/share/gtk-doc \
     ${prefix}/share/man/man1/xml2-config.1
 
+  depends=("${pkgname}==${pkgver}-${pkgrel}" 'rqdq-python2-libs>=2.7.10')
   fpmx "${pkgname}-python" \
-    -d "${pkgname} == ${pkgver}-${pkgrel}" \
-    -d "rqdq-python2-libs >= 2.7.10" \
     --rpm-user root --rpm-group root \
     ${prefix}/lib/python2.7 \
     ${prefix}/share/doc/libxml2-python-2.9.2

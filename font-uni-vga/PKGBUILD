@@ -2,6 +2,7 @@ pkgname=rqdq-font-uni-vga
 pkgver=1.0
 pkgrel=1
 arch=('any')
+depends=('freetype2>=2.3.11' 'xorg-x11-font-utils')
 makedepends=('xorg-x11-font-utils')
 source=(http://www.inp.nsk.su/~bolkhov/files/fonts/univga/uni-vga.tgz \
         after-install)

@@ -1,6 +1,7 @@
 pkgname=pycharm
 pkgver=4.5.4
 pkgrel=1
+depends=('java-1.8.0-openjdk')
 makedepends=()
 source=(http://download-cf.jetbrains.com/python/pycharm-professional-${pkgver}.tar.gz)
 md5sums=('5a6c36ee027087b15204aedeed98bbd2')
@@ -13,7 +14,6 @@ package() {
   ln -sfn /opt/pycharm/bin/pycharm.sh $pkgdir/usr/bin/pycharm
     
   fpmx "$pkgname" \
-    -d "java-1.8.0-openjdk" \
     --rpm-user root --rpm-group root \
     --directories /opt/pycharm-${pkgver} \
     opt usr
