@@ -2,6 +2,7 @@ pkgname=rqdq-font-classic-console
 pkgver=1.0
 pkgrel=1
 makedepends=()
+arch=('any')
 source=(http://webdraft.hu/fonts/classic-console/fonts/clacon.ttf \
 	after-install)
 md5sums=('f2f97095d1105880c85067557fb1e311'
@@ -14,9 +15,8 @@ package() {
   ln -sfn /usr/share/fonts/classic-console "${pkgdir}/etc/X11/fontpath.d/classic-console"
 
   fpmx "$pkgname" \
-    -a all \
     --rpm-user root --rpm-group root \
-    --after-install $workdir/after-install \
+    --after-install "${srcdir}/after-install" \
     --directories usr/share/fonts/classic-console \
     usr etc
 }

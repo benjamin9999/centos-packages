@@ -1,6 +1,7 @@
 pkgname=rqdq-font-uni-vga
 pkgver=1.0
 pkgrel=1
+arch=('any')
 makedepends=('xorg-x11-font-utils')
 source=(http://www.inp.nsk.su/~bolkhov/files/fonts/univga/uni-vga.tgz \
         after-install)
@@ -23,9 +24,8 @@ package() {
   mkfontdir
 
   fpmx "$pkgname" \
-    -a all \
     --rpm-user root --rpm-group root \
-    --after-install $workdir/after-install \
+    --after-install "${srcdir}/after-install" \
     --directories usr/share/fonts/uni_vga \
     usr etc
 }

@@ -2,6 +2,7 @@ pkgname=rqdq-font-dina
 pkgver=2.92
 pkgrel=1
 makedepends=('xorg-x11-font-utils')
+arch=('any')
 source=(https://www.donationcoder.com/Software/Jibz/Dina/downloads/Dina.zip \
         after-install)
 md5sums=('028424baac750e9fd0f54df03202e5d0'
@@ -24,7 +25,6 @@ package() {
   mkfontdir
 
   fpmx "$pkgname" \
-    -a all \
     --rpm-user root --rpm-group root \
     --after-install "${srcdir}/after-install" \
     --directories usr/share/fonts/dina \
