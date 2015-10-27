@@ -1,56 +1,62 @@
-pkgname=rqdq-python2
+pkgbase=rqdq-python2
+pkgname=(rqdq-python2 rqdq-python2-libs rqdq-python2-devel)
 pkgver=2.7.10
 pkgrel=2
 makedepends=('zlib-devel' 'openssl-devel' 'libffi-devel' 'readline-devel' 'bzip2-devel')
-source=(http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tgz \
-        after-install)
-md5sums=('d7547558fd673bd9d38e2108c6b42521'
-         '06e7640ea97c5d0cf76467a78956b414')
+source=(http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tgz)
+md5sums=('d7547558fd673bd9d38e2108c6b42521')
 
-prefix="opt/rqdq"
+_prefix="opt/rqdq"
 
 build() {
   cd "Python-${pkgver}"
-  ./configure --enable-shared --prefix=/${prefix}
+  ./configure --enable-shared --prefix=/${_prefix}
   make -j2
+
+  mkdir -p "${srcdir}/build"
+  DESTDIR="${srcdir}/build" make install
 }
 
-package() {
-  cd "Python-${pkgver}"
-  DESTDIR="${pkgdir}" make install
-  mkdir -p "${pkgdir}/etc/ld.so.conf.d"
-  echo "/${prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
+package_rqdq-python2() {
+  depends=("${pkgbase}-libs==${pkgver}-${pkgrel}")
 
-  depends=("${pkgname}-libs==${pkgver}-${pkgrel}")
-  fpmx "${pkgname}" \
-    --rpm-user root --rpm-group root \
-    ${prefix}/bin/pydoc \
-    ${prefix}/bin/python \
-    ${prefix}/bin/python2 \
-    ${prefix}/bin/python2.7 \
-    ${prefix}/share/man
-  
+  local src="${srcdir}/build/${_prefix}"
+  local dest="${pkgdir}/${_prefix}"
+
+  mkdir -p $dest/bin
+  mkdir -p $dest/share
+
+  cp -a $src/bin/{pydoc,python,python2,python2.7} $dest/bin/
+  cp -a $src/share/man $dest/share/
+
+  fpmx "${pkgname}"
+}
+
+package_rqdq-python2-libs() {
   depends=('zlib' 'openssl', 'libffi' 'readline' 'bzip2')
-  fpmx "${pkgname}-libs" \
-    --rpm-user root --rpm-group root \
-    --after-install "${srcdir}/after-install" \
-    etc \
-    ${prefix}/include/python2.7/pyconfig.h \
-    ${prefix}/lib/libpython2.7.so.1.0 \
-    ${prefix}/lib/python2.7
-  
-  depends=("${pkgname}-libs==${pkgver}-${pkgrel}")
-  fpmx "${pkgname}-devel" \
-    --rpm-user root --rpm-group root \
-    ${prefix}/bin/python-config \
-    ${prefix}/bin/python2.7-config \
-    ${prefix}/include/python2.7 \
-    ${prefix}/lib/libpython2.7.so
+  install='python2-libs.install'
+
+  local src="${srcdir}/build/${_prefix}"
+  local dest="${pkgdir}/${_prefix}"
+
+  mkdir -p $dest/lib $dest/include/python2.7
+  cp -a "$src/include/python2.7/pyconfig.h" "$dest/include/python2.7/pyconfig.h"
+  cp -a "$src/lib/libpython2.7.so.1.0" "$dest/lib/"
+  cp -a "$src/lib/python2.7" "$dest/lib/"
+
+  mkdir -p "${pkgdir}/etc/ld.so.conf.d"
+  echo "/${_prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
+
+  fpmx "${pkgname}"
 }
 
-root_install() {
-  yum -y install \
-    "${pkgname}-libs-${pkgver}-${pkgrel}.x86_64.rpm" \
-    "${pkgname}-devel-${pkgver}-${pkgrel}.x86_64.rpm" \
-    "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+package_rqdq-python2-devel() {
+  depends=("${pkgbase}-libs==${pkgver}-${pkgrel}")
+
+  mkdir -p "${pkgdir}/${_prefix}"/{bin,include,lib}
+  cp -a "${srcdir}/build/${_prefix}/bin"/{python-config,python2.7-config} "${pkgdir}/${_prefix}/bin/"
+  cp -a "${srcdir}/build/${_prefix}/include/python2.7" "${pkgdir}/${_prefix}/include/"
+  cp -a "${srcdir}/build/${_prefix}/lib/libpython2.7.so" "${pkgdir}/${_prefix}/lib/"
+
+  fpmx "${pkgname}"
 }

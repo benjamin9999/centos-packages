@@ -2,12 +2,11 @@ pkgname=rqdq-font-uni-vga
 pkgver=1.0
 pkgrel=1
 arch=('any')
+install=font.install
 depends=('freetype2>=2.3.11' 'xorg-x11-font-utils')
 makedepends=('xorg-x11-font-utils')
-source=(http://www.inp.nsk.su/~bolkhov/files/fonts/univga/uni-vga.tgz \
-        after-install)
-md5sums=('60fbba53cb0efec1363fcc5fb8c244d9'
-         '7b10fc7803853ac405dcd4ff17b603f2')
+source=(http://www.inp.nsk.su/~bolkhov/files/fonts/univga/uni-vga.tgz)
+md5sums=('60fbba53cb0efec1363fcc5fb8c244d9')
 
 build() {
     cd uni_vga
@@ -25,12 +24,6 @@ package() {
   mkfontdir
 
   fpmx "$pkgname" \
-    --rpm-user root --rpm-group root \
-    --after-install "${srcdir}/after-install" \
     --directories usr/share/fonts/uni_vga \
     usr etc
-}
-
-root_install() {
-    yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
 }

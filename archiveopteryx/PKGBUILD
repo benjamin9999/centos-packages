@@ -22,18 +22,9 @@ package() {
   cd "$pkgname"
   INSTALLROOT="$pkgdir" jam install
 
-#        -d "${pkgname}-libs == ${pkgver}-${pkgrel}" \
-# --rpm-attr '0701,aox,aox:/var/run/aox' \
-
   fpmx "$pkgname" \
-    --rpm-use-file-permissions \
-    --rpm-user root --rpm-group root \
     --directories /var/run/aox \
     --directories /usr/lib/archiveopteryx \
     --directories /usr/share/doc/archiveopteryx \
     usr var
-}
-
-root_install() {
-  yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
 }

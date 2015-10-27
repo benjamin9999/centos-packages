@@ -19,7 +19,3 @@ package() {
   /$_prefix/bin/python setup.py install --skip-build -O1 --root="$pkgdir"
   fpmx "$pkgname"
 }
-
-root_install() {
-  yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
-}

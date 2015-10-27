@@ -16,11 +16,5 @@ package() {
   cd "autocutsel-${pkgver}"
   DESTDIR="${pkgdir}" make install
 
-  fpmx "${pkgname}" \
-    --rpm-user root --rpm-group root \
-    usr
-}
-
-root_install() {
-  sudo yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+  fpmx "${pkgname}"
 }

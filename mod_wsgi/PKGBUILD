@@ -6,11 +6,11 @@ makedepends=('httpd-devel' 'rqdq-python2-devel')
 source=(https://github.com/GrahamDumpleton/mod_wsgi/archive/${pkgver}.tar.gz)
 md5sums=('69de4d90e1c47ca66ca227b009332a76')
 
-prefix="opt/rqdq"
+_prefix="opt/rqdq"
 
 build() {
   cd "mod_wsgi-${pkgver}"
-  ./configure --with-python=/${prefix}/bin/python
+  ./configure --with-python=/${_prefix}/bin/python
   make -j2
 }
 
@@ -18,11 +18,5 @@ package() {
   cd "mod_wsgi-${pkgver}"
   make DESTDIR="${pkgdir}" install
 
-  fpmx "$pkgname" \
-    --rpm-user root --rpm-group root \
-    usr
-}
-
-root_install() {
-  yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
+  fpmx "$pkgname"
 }

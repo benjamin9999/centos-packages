@@ -3,10 +3,9 @@ pkgver=1.0
 pkgrel=1
 makedepends=()
 arch=('any')
-source=(http://webdraft.hu/fonts/classic-console/fonts/clacon.ttf \
-	after-install)
-md5sums=('f2f97095d1105880c85067557fb1e311'
-         '7b10fc7803853ac405dcd4ff17b603f2')
+install=font.install
+source=(http://webdraft.hu/fonts/classic-console/fonts/clacon.ttf)
+md5sums=('f2f97095d1105880c85067557fb1e311')
 
 package() {
   mkdir -p "${pkgdir}/etc/X11/fontpath.d"
@@ -15,12 +14,6 @@ package() {
   ln -sfn /usr/share/fonts/classic-console "${pkgdir}/etc/X11/fontpath.d/classic-console"
 
   fpmx "$pkgname" \
-    --rpm-user root --rpm-group root \
-    --after-install "${srcdir}/after-install" \
     --directories usr/share/fonts/classic-console \
     usr etc
-}
-
-root_install() {
-    yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
 }

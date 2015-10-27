@@ -3,10 +3,9 @@ pkgver=2.92
 pkgrel=1
 makedepends=('xorg-x11-font-utils')
 arch=('any')
-source=(https://www.donationcoder.com/Software/Jibz/Dina/downloads/Dina.zip \
-        after-install)
-md5sums=('028424baac750e9fd0f54df03202e5d0'
-         '7b10fc7803853ac405dcd4ff17b603f2')
+install=font.install
+source=(https://www.donationcoder.com/Software/Jibz/Dina/downloads/Dina.zip)
+md5sums=('028424baac750e9fd0f54df03202e5d0')
 
 build() {
     mkdir build
@@ -25,12 +24,6 @@ package() {
   mkfontdir
 
   fpmx "$pkgname" \
-    --rpm-user root --rpm-group root \
-    --after-install "${srcdir}/after-install" \
     --directories usr/share/fonts/dina \
     usr etc
-}
-
-root_install() {
-  yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
 }

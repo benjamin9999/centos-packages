@@ -14,11 +14,6 @@ package() {
   ln -sfn /opt/firefox/firefox "${pkgdir}/usr/bin/firefox"
     
   fpmx "$pkgname" \
-    --rpm-user root --rpm-group root \
     --directories /opt/firefox-${pkgver} \
     opt usr
-}
-
-root_install() {
-  yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
 }

@@ -1,15 +1,14 @@
-pkgname=rqdq-libxml2
+pkgbase=rqdq-libxml2
+pkgname=(rqdq-libxml2 rqdq-libxml2-devel rqdq-libxml2-python)
 pkgver=2.9.2
 pkgrel=2
 makedepends=('zlib-devel' 'rqdq-python2-devel')
 source=(ftp://xmlsoft.org/libxml2/libxml2-${pkgver}.tar.gz \
-        fix-duplicate-qname-message.patch \
-	after-install)
+        fix-duplicate-qname-message.patch)
 md5sums=('9e6a9aca9d155737868b3dc5fd82f788'
-         'a143a60f05d3c2c326270aa4ab01fa1e'
-         '06e7640ea97c5d0cf76467a78956b414')
+         'a143a60f05d3c2c326270aa4ab01fa1e')
 
-prefix="opt/rqdq"
+_prefix="opt/rqdq"
 
 prepare() {
   cd "libxml2-${pkgver}"
@@ -18,51 +17,54 @@ prepare() {
 
 build() {
   cd "libxml2-${pkgver}"
-  ./configure --prefix=/$prefix --with-python=/${prefix}/bin/python
+  ./configure --prefix=/$_prefix --with-python=/${_prefix}/bin/python
   make -j2
 }
 
-package() {
+package_rqdq-libxml2() {
+  install=libxml2.install
+  depends=('zlib')
+
   cd "libxml2-${pkgver}"
   DESTDIR="$pkgdir" make install
   mkdir -p "${pkgdir}/etc/ld.so.conf.d"
-  echo "/${prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
+  echo "/${_prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
 
-  depends=('zlib')
   fpmx "$pkgname" \
-    --rpm-user root --rpm-group root \
-    --after-install "${srcdir}/after-install" \
-    ${prefix}/bin/xmlcatalog \
-    ${prefix}/bin/xmllint \
-    ${prefix}/lib/libxml2.so.2 \
-    ${prefix}/lib/libxml2.so.2.9.2 \
-    ${prefix}/share/man/man1/xmlcatalog.1 \
-    ${prefix}/share/man/man1/xmllint.1 \
-    ${prefix}/share/man/man3
-
-  depends=("${pkgname}==${pkgver}-${pkgrel}")
-  fpmx "${pkgname}-devel" \
-    --rpm-user root --rpm-group root \
-    ${prefix}/bin/xml2-config \
-    ${prefix}/include/libxml2 \
-    ${prefix}/lib/libxml2.so \
-    ${prefix}/lib/pkgconfig \
-    ${prefix}/lib/xml2Conf.sh \
-    ${prefix}/share/aclocal/libxml.m4 \
-    ${prefix}/share/doc/libxml2-2.9.2 \
-    ${prefix}/share/gtk-doc \
-    ${prefix}/share/man/man1/xml2-config.1
-
-  depends=("${pkgname}==${pkgver}-${pkgrel}" 'rqdq-python2-libs>=2.7.10')
-  fpmx "${pkgname}-python" \
-    --rpm-user root --rpm-group root \
-    ${prefix}/lib/python2.7 \
-    ${prefix}/share/doc/libxml2-python-2.9.2
+    ${_prefix}/bin/xmlcatalog \
+    ${_prefix}/bin/xmllint \
+    ${_prefix}/lib/libxml2.so.2 \
+    ${_prefix}/lib/libxml2.so.2.9.2 \
+    ${_prefix}/share/man/man1/xmlcatalog.1 \
+    ${_prefix}/share/man/man1/xmllint.1 \
+    ${_prefix}/share/man/man3
 }
 
-root_install() {
-  yum -y install \
-    "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm" \
-    "${pkgname}-devel-${pkgver}-${pkgrel}.x86_64.rpm" \
-    "${pkgname}-python-${pkgver}-${pkgrel}.x86_64.rpm"
+package_rqdq-libxml2-devel() {
+  depends=("${pkgbase}==${pkgver}-${pkgrel}")
+
+  cd "libxml2-${pkgver}"
+  DESTDIR="$pkgdir" make install
+
+  fpmx "${pkgname}" \
+    ${_prefix}/bin/xml2-config \
+    ${_prefix}/include/libxml2 \
+    ${_prefix}/lib/libxml2.so \
+    ${_prefix}/lib/pkgconfig \
+    ${_prefix}/lib/xml2Conf.sh \
+    ${_prefix}/share/aclocal/libxml.m4 \
+    ${_prefix}/share/doc/libxml2-2.9.2 \
+    ${_prefix}/share/gtk-doc \
+    ${_prefix}/share/man/man1/xml2-config.1
+}
+
+package_rqdq-libxml2-python() {
+  depends=("${pkgbase}==${pkgver}-${pkgrel}" 'rqdq-python2-libs>=2.7.10')
+
+  cd "libxml2-${pkgver}"
+  DESTDIR="$pkgdir" make install
+
+  fpmx "${pkgname}" \
+    ${_prefix}/lib/python2.7 \
+    ${_prefix}/share/doc/libxml2-python-2.9.2
 }

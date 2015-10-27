@@ -13,10 +13,5 @@ package() {
   mkdir -p "${pkgdir}/usr/bin"
   install -m 0755 makepkg/makepkg.sh "${pkgdir}/usr/bin/makepkg"
 
-  fpmx "${pkgname}" \
-    --rpm-user root --rpm-group root
-}
-
-root_install() {
-  yum -y install "${pkgname}-${pkgver}-${pkgrel}.noarch.rpm"
+  fpmx "$pkgname"
 }

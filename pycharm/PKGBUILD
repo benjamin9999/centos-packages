@@ -14,11 +14,6 @@ package() {
   ln -sfn /opt/pycharm/bin/pycharm.sh $pkgdir/usr/bin/pycharm
     
   fpmx "$pkgname" \
-    --rpm-user root --rpm-group root \
     --directories /opt/pycharm-${pkgver} \
     opt usr
-}
-
-root_install() {
-    yum -y install "${pkgname}-${pkgver}-${pkgrel}.x86_64.rpm"
 }
