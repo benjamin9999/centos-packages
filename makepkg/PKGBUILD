@@ -12,6 +12,4 @@ package() {
 
   mkdir -p "${pkgdir}/usr/bin"
   install -m 0755 makepkg/makepkg.sh "${pkgdir}/usr/bin/makepkg"
-
-  fpmx "$pkgname"
 }

@@ -21,10 +21,5 @@ build() {
 package() {
   cd "$pkgname"
   INSTALLROOT="$pkgdir" jam install
-
-  fpmx "$pkgname" \
-    --directories /var/run/aox \
-    --directories /usr/lib/archiveopteryx \
-    --directories /usr/share/doc/archiveopteryx \
-    usr var
+  rmdir "${pkgdir}/etc"
 }

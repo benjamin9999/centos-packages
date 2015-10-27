@@ -1,8 +1,8 @@
 pkgbase=rqdq-libxslt
-pkgname=(rqdq-libxslt rqdq-libxslt-devel rqdq-xslt-python)
+pkgname=(rqdq-libxslt rqdq-libxslt-devel rqdq-libxslt-python)
 pkgver=1.1.28
 pkgrel=2
-makedepends=('rqdq-libxml2-devel')
+makedepends=('rqdq-libxml2-devel' 'rqdq-libxml2-python')
 source=(ftp://xmlsoft.org/XSLT/libxslt-${pkgver}.tar.gz)
 md5sums=('9667bf6f9310b957254fdcf6596600b7')
 
@@ -12,54 +12,55 @@ build() {
   cd "libxslt-${pkgver}"
   ./configure --prefix=/${_prefix} --with-python=/${_prefix}/bin/python --with-libxml-prefix=/${_prefix}
   make -j2
+
+  mkdir -p "$srcdir"/build
+  DESTDIR="${srcdir}/build" make install
 }
 
-package() {
+package_rqdq-libxslt() {
   depends=('zlib' 'rqdq-libxml2==2.9.2-2')
   install=libxslt.install
 
+  local _src="${srcdir}/build/${_prefix}"
+  local _dst="${pkgdir}/${_prefix}"
+
   cd "libxslt-${pkgver}"
-  DESTDIR="${pkgdir}" make install
+
+  install -d "$_dst"/{bin,lib,share/man}
+  cp -a "$_src"/bin/xsltproc "$_dst"/bin/
+  cp -a "$_src"/lib/{libexslt.so.0*,libxslt.so.1*} "$_dst"/lib/
+  cp -a "$_src"/share/man/man1 "$_dst"/share/man/
+
   mkdir -p "${pkgdir}/etc/ld.so.conf.d"
   echo "/${_prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
-
-  fpmx "$pkgname" \
-    ${_prefix}/bin/xsltproc \
-    ${_prefix}/lib/libexslt.so.0 \
-    ${_prefix}/lib/libexslt.so.0.8.17 \
-    ${_prefix}/lib/libxslt.so.1 \
-    ${_prefix}/lib/libxslt.so.1.1.28 \
-    ${_prefix}/share/man/man1
 }
 
 package_rqdq-libxslt-devel() {
   depends=("${pkgbase}==${pkgver}-${pkgrel}")
 
-  cd "libxslt-${pkgver}"
-  DESTDIR="${pkgdir}" make install
+  local _src="${srcdir}/build/${_prefix}"
+  local _dst="${pkgdir}/${_prefix}"
 
-  fpmx "$pkgname" \
-    ${_prefix}/bin/xslt-config \
-    ${_prefix}/include/libexslt \
-    ${_prefix}/include/libxslt \
-    ${_prefix}/lib/libexslt.a \
-    ${_prefix}/lib/libexslt.so \
-    ${_prefix}/lib/libxslt.a \
-    ${_prefix}/lib/libxslt.so \
-    ${_prefix}/lib/pkgconfig \
-    ${_prefix}/lib/xsltConf.sh \
-    ${_prefix}/share/aclocal/libxslt.m4 \
-    ${_prefix}/share/doc/libxslt-1.1.28 \
-    ${_prefix}/share/man/man3
+  cd "libxslt-${pkgver}"
+
+  install -d "$_dst"/{bin,include,lib,share/{aclocal,doc,man}}
+  cp -a "$_src"/bin/xslt-config "$_dst"/bin/
+  cp -a "$_src"/include/{libexslt*,libxslt*} "$_dst"/include/
+  cp -a "$_src"/lib/{libexslt.{a,so},libxslt.{a,so},pkgconfig,xsltConf.sh} "$_dst"/lib/
+  cp -a "$_src"/share/aclocal/libxslt.m4 "$_dst"/share/aclocal/
+  cp -a "$_src"/share/doc/libxslt-$pkgver "$_dst"/share/doc/
+  cp -a "$_src"/share/man/man3 "$_dst"/share/man/
 }
 
 package_rqdq-libxslt-python() {
   depends=("${pkgbase}==${pkgver}-${pkgrel}" 'rqdq-python2-libs==2.7.10')
 
-  cd "libxslt-${pkgver}"
-  DESTDIR="${pkgdir}" make install
+  local _src="${srcdir}/build/${_prefix}"
+  local _dst="${pkgdir}/${_prefix}"
 
-  fpmx "$pkgname" \
-    ${_prefix}/lib/python2.7 \
-    ${_prefix}/share/doc/libxslt-python-1.1.28
+  cd "libxslt-${pkgver}"
+
+  install -d "$_dst"/{lib,share/doc}
+  cp -a "$_src"/lib/python2.7 "$_dst"/lib/
+  cp -a "$_src"/share/doc/libxslt-python-$pkgver "$_dst"/share/doc/
 }

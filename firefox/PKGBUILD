@@ -12,8 +12,4 @@ package() {
   cp -a firefox/* "${pkgdir}/opt/firefox-${pkgver}"
   ln -sfn "firefox-${pkgver}" "${pkgdir}/opt/firefox"
   ln -sfn /opt/firefox/firefox "${pkgdir}/usr/bin/firefox"
-    
-  fpmx "$pkgname" \
-    --directories /opt/firefox-${pkgver} \
-    opt usr
 }

@@ -19,52 +19,56 @@ build() {
   cd "libxml2-${pkgver}"
   ./configure --prefix=/$_prefix --with-python=/${_prefix}/bin/python
   make -j2
+
+  mkdir -p "${srcdir}/build"
+  DESTDIR="${srcdir}/build" make install
 }
 
 package_rqdq-libxml2() {
   install=libxml2.install
   depends=('zlib')
 
-  cd "libxml2-${pkgver}"
-  DESTDIR="$pkgdir" make install
-  mkdir -p "${pkgdir}/etc/ld.so.conf.d"
-  echo "/${_prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
+  local _src="${srcdir}/build/${_prefix}"
+  local _dst="${pkgdir}/${_prefix}"
 
-  fpmx "$pkgname" \
-    ${_prefix}/bin/xmlcatalog \
-    ${_prefix}/bin/xmllint \
-    ${_prefix}/lib/libxml2.so.2 \
-    ${_prefix}/lib/libxml2.so.2.9.2 \
-    ${_prefix}/share/man/man1/xmlcatalog.1 \
-    ${_prefix}/share/man/man1/xmllint.1 \
-    ${_prefix}/share/man/man3
+  cd "libxml2-${pkgver}"
+  install -d "$_dst"/{bin,lib,share/man/man1}
+  cp -a "$_src"/bin/{xmlcatalog,xmllint} "$_dst"/bin/
+  cp -a "$_src"/lib/libxml2.so.2* "$_dst"/lib/
+  cp -a "$_src"/share/man/man1/{xmlcatalog.1,xmllint.1} "$_dst"/share/man/man1/
+  cp -a "$_src"/share/man/man3 "$_dst"/share/man/
+
+  install -d "${pkgdir}/etc/ld.so.conf.d"
+  echo "/${_prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
 }
 
 package_rqdq-libxml2-devel() {
   depends=("${pkgbase}==${pkgver}-${pkgrel}")
 
-  cd "libxml2-${pkgver}"
-  DESTDIR="$pkgdir" make install
+  local _src="${srcdir}/build/${_prefix}"
+  local _dst="${pkgdir}/${_prefix}"
 
-  fpmx "${pkgname}" \
-    ${_prefix}/bin/xml2-config \
-    ${_prefix}/include/libxml2 \
-    ${_prefix}/lib/libxml2.so \
-    ${_prefix}/lib/pkgconfig \
-    ${_prefix}/lib/xml2Conf.sh \
-    ${_prefix}/share/aclocal/libxml.m4 \
-    ${_prefix}/share/doc/libxml2-2.9.2 \
-    ${_prefix}/share/gtk-doc \
-    ${_prefix}/share/man/man1/xml2-config.1
+  cd "libxml2-${pkgver}"
+  install -d "$_dst"/{bin,include,lib,share/{aclocal,doc,man/man1}}
+
+  cp -a "$_src"/bin/xml2-config "$_dst"/bin/
+  cp -a "$_src"/include/libxml2 "$_dst"/include/
+  cp -a "$_src"/lib/{libxml2.so,pkgconfig,xml2Conf.sh} "$_dst"/lib/
+  cp -a "$_src"/share/aclocal/libxml.m4 "$_dst"/share/aclocal/
+  cp -a "$_src"/share/doc/libxml2-${pkgver} "$_dst"/share/doc/
+  cp -a "$_src"/share/gtk-doc "$_dst"/share/
+  cp -a "$_src"/share/man/man1/xml2-config.1 "$_dst"/share/man/man1/
 }
 
 package_rqdq-libxml2-python() {
   depends=("${pkgbase}==${pkgver}-${pkgrel}" 'rqdq-python2-libs>=2.7.10')
 
-  cd "libxml2-${pkgver}"
-  DESTDIR="$pkgdir" make install
+  local _src="${srcdir}/build/${_prefix}"
+  local _dst="${pkgdir}/${_prefix}"
 
-  fpmx "${pkgname}" \
-    ${_prefix}/lib/python2.7 \
-    ${_prefix}/share/doc/libxml2-python-2.9.2
+  cd "libxml2-${pkgver}"
+  install -d "$_dst"/{lib,share/doc}
+
+  cp -a "$_src"/lib/python2.7 "$_dst"/lib/
+  cp -a "$_src"/share/doc/libxml2-python-${pkgver} "$_dst"/share/doc/
 }

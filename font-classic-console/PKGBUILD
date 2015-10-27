@@ -12,8 +12,4 @@ package() {
   mkdir -p "${pkgdir}/usr/share/fonts/classic-console"
   cp "${srcdir}/clacon.ttf" "${pkgdir}/usr/share/fonts/classic-console/"
   ln -sfn /usr/share/fonts/classic-console "${pkgdir}/etc/X11/fontpath.d/classic-console"
-
-  fpmx "$pkgname" \
-    --directories usr/share/fonts/classic-console \
-    usr etc
 }

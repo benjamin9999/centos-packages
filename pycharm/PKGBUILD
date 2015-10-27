@@ -12,8 +12,4 @@ package() {
   cp -a * $pkgdir/opt/
   ln -sfn pycharm-${pkgver} $pkgdir/opt/pycharm
   ln -sfn /opt/pycharm/bin/pycharm.sh $pkgdir/usr/bin/pycharm
-    
-  fpmx "$pkgname" \
-    --directories /opt/pycharm-${pkgver} \
-    opt usr
 }

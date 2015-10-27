@@ -22,8 +22,4 @@ package() {
   ln -sfn /usr/share/fonts/uni_vga "${pkgdir}/etc/X11/fontpath.d/uni_vga"
   cd "${pkgdir}/usr/share/fonts/uni_vga"
   mkfontdir
-
-  fpmx "$pkgname" \
-    --directories usr/share/fonts/uni_vga \
-    usr etc
 }

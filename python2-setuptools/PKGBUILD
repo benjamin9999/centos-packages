@@ -17,5 +17,4 @@ build() {
 package() {
   cd "$srcdir/$_libname-$pkgver"
   /$_prefix/bin/python setup.py install --skip-build -O1 --root="$pkgdir"
-  fpmx "$pkgname"
 }

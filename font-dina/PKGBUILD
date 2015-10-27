@@ -22,8 +22,4 @@ package() {
   ln -sfn /usr/share/fonts/dina "${pkgdir}/etc/X11/fontpath.d/dina"
   cd "${pkgdir}/usr/share/fonts/dina"
   mkfontdir
-
-  fpmx "$pkgname" \
-    --directories usr/share/fonts/dina \
-    usr etc
 }

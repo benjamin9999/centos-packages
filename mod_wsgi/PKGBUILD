@@ -17,6 +17,4 @@ build() {
 package() {
   cd "mod_wsgi-${pkgver}"
   make DESTDIR="${pkgdir}" install
-
-  fpmx "$pkgname"
 }

@@ -15,6 +15,4 @@ build() {
 package() {
   cd "autocutsel-${pkgver}"
   DESTDIR="${pkgdir}" make install
-
-  fpmx "${pkgname}"
 }
