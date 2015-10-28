@@ -1,0 +1,9 @@
+
+pkg/
+src/
+*.tar.gz
+*.tar.bz2
+*.tgz
+*.rpm
+*.zip
+*.ttf
