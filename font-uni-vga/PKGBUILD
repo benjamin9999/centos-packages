@@ -1,9 +1,9 @@
 pkgname=rqdq-font-uni-vga
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 arch=('any')
 install=font.install
-depends=('freetype2>=2.3.11' 'xorg-x11-font-utils')
+depends=('freetype2' 'xorg-x11-font-utils')
 makedepends=('xorg-x11-font-utils')
 source=(http://www.inp.nsk.su/~bolkhov/files/fonts/univga/uni-vga.tgz)
 md5sums=('60fbba53cb0efec1363fcc5fb8c244d9')

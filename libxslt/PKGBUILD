@@ -1,7 +1,7 @@
 pkgbase=rqdq-libxslt
 pkgname=(rqdq-libxslt rqdq-libxslt-devel rqdq-libxslt-python)
 pkgver=1.1.28
-pkgrel=2
+pkgrel=6
 makedepends=('rqdq-libxml2-devel' 'rqdq-libxml2-python')
 source=(ftp://xmlsoft.org/XSLT/libxslt-${pkgver}.tar.gz)
 md5sums=('9667bf6f9310b957254fdcf6596600b7')
@@ -10,15 +10,15 @@ _prefix="opt/rqdq"
 
 build() {
   cd "libxslt-${pkgver}"
-  ./configure --prefix=/${_prefix} --with-python=/${_prefix}/bin/python --with-libxml-prefix=/${_prefix}
-  make -j2
+  PATH=/opt/rqdq/bin:$PATH ./configure --prefix=/${_prefix} --with-python=/${_prefix}/bin/python --with-libxml-prefix=/${_prefix}
+  LIBRARY_PATH=/opt/rqdq/lib:$LIBRARY_PATH make -j2
 
   mkdir -p "$srcdir"/build
   DESTDIR="${srcdir}/build" make install
 }
 
 package_rqdq-libxslt() {
-  depends=('zlib' 'rqdq-libxml2==2.9.2-2')
+  depends=('zlib' "rqdq-libxml2 = 2.9.2-6.${RPM_DIST}")
   install=libxslt.install
 
   local _src="${srcdir}/build/${_prefix}"
@@ -36,7 +36,7 @@ package_rqdq-libxslt() {
 }
 
 package_rqdq-libxslt-devel() {
-  depends=("${pkgbase}==${pkgver}-${pkgrel}")
+  depends=("${pkgbase} = ${pkgver}-${pkgrel}.${RPM_DIST}")
 
   local _src="${srcdir}/build/${_prefix}"
   local _dst="${pkgdir}/${_prefix}"
@@ -53,7 +53,7 @@ package_rqdq-libxslt-devel() {
 }
 
 package_rqdq-libxslt-python() {
-  depends=("${pkgbase}==${pkgver}-${pkgrel}" 'rqdq-python2-libs==2.7.10')
+  depends=("${pkgbase} = ${pkgver}-${pkgrel}.${RPM_DIST}" 'rqdq-python2-libs = 2.7.10')
 
   local _src="${srcdir}/build/${_prefix}"
   local _dst="${pkgdir}/${_prefix}"

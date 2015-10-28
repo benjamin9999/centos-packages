@@ -1,7 +1,7 @@
 pkgbase=rqdq-python2
 pkgname=(rqdq-python2 rqdq-python2-libs rqdq-python2-devel)
 pkgver=2.7.10
-pkgrel=2
+pkgrel=6
 makedepends=('zlib-devel' 'openssl-devel' 'libffi-devel' 'readline-devel' 'bzip2-devel')
 source=(http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tgz)
 md5sums=('d7547558fd673bd9d38e2108c6b42521')
@@ -18,7 +18,8 @@ build() {
 }
 
 package_rqdq-python2() {
-  depends=("${pkgbase}-libs==${pkgver}-${pkgrel}")
+  #depends=("${pkgbase}-libs=${pkgver}")
+  depends=("${pkgbase}-libs = ${pkgver}-${pkgrel}.${RPM_DIST}")
 
   local src="${srcdir}/build/${_prefix}"
   local dest="${pkgdir}/${_prefix}"
@@ -47,10 +48,10 @@ package_rqdq-python2-libs() {
 }
 
 package_rqdq-python2-devel() {
-  depends=("${pkgbase}-libs==${pkgver}-${pkgrel}")
+  depends=("${pkgbase}-libs = ${pkgver}-${pkgrel}.${RPM_DIST}")
 
   mkdir -p "${pkgdir}/${_prefix}"/{bin,include,lib}
-  cp -a "${srcdir}/build/${_prefix}/bin"/{python-config,python2.7-config} "${pkgdir}/${_prefix}/bin/"
+  cp -a "${srcdir}/build/${_prefix}/bin"/python*-config "${pkgdir}/${_prefix}/bin/"
   cp -a "${srcdir}/build/${_prefix}/include/python2.7" "${pkgdir}/${_prefix}/include/"
   cp -a "${srcdir}/build/${_prefix}/lib/libpython2.7.so" "${pkgdir}/${_prefix}/lib/"
 }

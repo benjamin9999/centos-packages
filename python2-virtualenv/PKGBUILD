@@ -1,9 +1,9 @@
 pkgname=rqdq-python2-virtualenv
 pkgver=13.1.2
-pkgrel=1
+pkgrel=2
 _libname=virtualenv
 _prefix="opt/rqdq"
-depends=('rqdq-python2-libs>=2.7.10' 'rqdq-python2-setuptools>=18.3.2')
+depends=('rqdq-python2-libs = 2.7.10' 'rqdq-python2-setuptools')
 makedepends=()
 arch=('any')
 source=(http://pypi.python.org/packages/source/${_libname:0:1}/$_libname/$_libname-$pkgver.tar.gz)
