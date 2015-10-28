@@ -1,0 +1,19 @@
+pkgname=lsw
+pkgver=0.3
+pkgrel=1
+pkgdesc="List titles of all running X windows"
+url="http://tools.suckless.org/lsw/"
+license=('MIT')
+depends=('libX11')
+source=(http://dl.suckless.org/tools/lsw-$pkgver.tar.gz)
+md5sums=('3ae42c41a7ceda8ddf6e0fbab0866f79')
+
+build() {
+  cd $srcdir/lsw-$pkgver
+  make
+}
+
+package() {
+  cd "$srcdir/lsw-$pkgver"
+  make DESTDIR=$pkgdir PREFIX=/usr install
+}

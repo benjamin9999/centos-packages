@@ -1,0 +1,19 @@
+pkgname=dmenu
+pkgver=4.5
+pkgrel=1
+pkgdesc="Dynamic X menu"
+url="http://tools.suckless.org/dmenu/"
+license=('MIT')
+depends=('sh' 'libxinerama' 'libxft')
+source=(http://dl.suckless.org/tools/dmenu-$pkgver.tar.gz)
+sha256sums=('082cd698d82125ca0b3989006fb84ac4675c2a5585bf5bb8af0ea09cfb95a850')
+
+build() {
+  cd $srcdir/dmenu-$pkgver
+  make
+}
+
+package() {
+  cd "$srcdir/dmenu-$pkgver"
+  make DESTDIR=$pkgdir PREFIX=/usr install
+}
