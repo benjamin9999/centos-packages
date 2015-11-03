@@ -1,15 +1,15 @@
 pkgname=pycharm
-pkgver=4.5.4
-pkgrel=1
+pkgver=5.0.0
+pkgrel=2
 depends=('java-1.8.0-openjdk')
 makedepends=()
-source=(http://download-cf.jetbrains.com/python/pycharm-professional-${pkgver}.tar.gz)
-md5sums=('5a6c36ee027087b15204aedeed98bbd2')
+source=(http://download.jetbrains.com/python/pycharm-professional-5.0.tar.gz)
+sha256sums=('066ca91c7d810765a96e82673d4241de855b82cd0d46dc88e46f00da00789c9a')
 
 package() {
   mkdir -p $pkgdir/opt
   mkdir -p $pkgdir/usr/bin
   cp -a * $pkgdir/opt/
-  ln -sfn pycharm-${pkgver} $pkgdir/opt/pycharm
+  ln -sfn pycharm-5.0 $pkgdir/opt/pycharm
   ln -sfn /opt/pycharm/bin/pycharm.sh $pkgdir/usr/bin/pycharm
 }
