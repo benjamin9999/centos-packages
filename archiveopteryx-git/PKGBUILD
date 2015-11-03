@@ -1,9 +1,12 @@
-pkgname=archiveopteryx
-pkgver=3.2.0.1
+pkgname=archiveopteryx-git
+pkgver=20150624
 pkgrel=1
+url='http://archiveopteryx.org/'
+pkgdesc='PostgreSQL email storage with IMAP access and more'
+license=('BSD')
 depends=('openssl' 'zlib')
 makedepends=('jam' 'openssl-devel' 'zlib-devel')
-source=(archiveopteryx::git+https://github.com/aox/aox \
+source=($pkgname::git+https://github.com/aox/aox#commit=f98b6d3 \
         Jamsettings.patch)
 md5sums=('SKIP'
          'fbff2c7ff665ede955436b643dcd98e3')
