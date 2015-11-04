@@ -1,6 +1,6 @@
 pkgname=dmenu
 pkgver=4.5
-pkgrel=2
+pkgrel=3
 pkgdesc="Dynamic X menu"
 url="http://tools.suckless.org/dmenu/"
 license=('MIT')

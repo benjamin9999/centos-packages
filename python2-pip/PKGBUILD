@@ -1,6 +1,8 @@
 pkgname=rqdq-python2-pip
 pkgver=7.1.2
-pkgrel=2
+pkgrel=4
+pkgdesc='The PyPA recommended tool for installing Python packages.'
+url='https://pypi.python.org/pypi/pip'
 _libname=pip
 _prefix="opt/rqdq"
 depends=('rqdq-python2-libs = 2.7.10' 'rqdq-python2-setuptools')

@@ -1,9 +1,11 @@
 pkgname=rqdq-font-classic-console
 pkgver=1.0
-pkgrel=1
+pkgrel=2
+pkgdesc='ASCII VGA 8x16 reproduction TrueType font'
 makedepends=()
 arch=('any')
 install=font.install
+url='http://webdraft.hu/fonts/classic-console/'
 source=(http://webdraft.hu/fonts/classic-console/fonts/clacon.ttf)
 md5sums=('f2f97095d1105880c85067557fb1e311')
 

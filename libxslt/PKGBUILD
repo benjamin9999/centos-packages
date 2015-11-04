@@ -1,7 +1,9 @@
 pkgbase=rqdq-libxslt
 pkgname=(rqdq-libxslt rqdq-libxslt-devel rqdq-libxslt-python)
 pkgver=1.1.28
-pkgrel=6
+pkgdesc='Library providing the Gnome XSLT Engine'
+pkgrel=7
+url='http://xmlsoft.org/'
 makedepends=('rqdq-libxml2-devel' 'rqdq-libxml2-python')
 source=(ftp://xmlsoft.org/XSLT/libxslt-${pkgver}.tar.gz)
 md5sums=('9667bf6f9310b957254fdcf6596600b7')
@@ -43,11 +45,11 @@ package_rqdq-libxslt-devel() {
 
   cd "libxslt-${pkgver}"
 
-  install -d "$_dst"/{bin,include,lib,share/{aclocal,doc,man}}
+  install -d "$_dst"/{bin,include,lib,share/{doc,man}}
   cp -a "$_src"/bin/xslt-config "$_dst"/bin/
   cp -a "$_src"/include/{libexslt*,libxslt*} "$_dst"/include/
   cp -a "$_src"/lib/{libexslt.{a,so},libxslt.{a,so},pkgconfig,xsltConf.sh} "$_dst"/lib/
-  cp -a "$_src"/share/aclocal/libxslt.m4 "$_dst"/share/aclocal/
+  cp -a "$_src"/share/aclocal "$_dst"/share/
   cp -a "$_src"/share/doc/libxslt-$pkgver "$_dst"/share/doc/
   cp -a "$_src"/share/man/man3 "$_dst"/share/man/
 }

@@ -1,7 +1,9 @@
 pkgbase=rqdq-python2
 pkgname=(rqdq-python2 rqdq-python2-libs rqdq-python2-devel)
 pkgver=2.7.10
-pkgrel=6
+pkgrel=7
+pkgdesc='An interpreted, interactive, object-oriented programming language'
+url='http://python.org/'
 makedepends=('zlib-devel' 'openssl-devel' 'libffi-devel' 'readline-devel' 'bzip2-devel')
 source=(http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tgz)
 md5sums=('d7547558fd673bd9d38e2108c6b42521')

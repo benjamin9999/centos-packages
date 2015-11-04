@@ -1,6 +1,8 @@
 pkgname=pycharm
 pkgver=5.0.0
-pkgrel=2
+pkgrel=3
+pkgdesc='Powerful Python and Django IDE'
+url='http://www.jetbrains.com/pycharm/'
 depends=('java-1.8.0-openjdk')
 makedepends=()
 source=(http://download.jetbrains.com/python/pycharm-professional-5.0.tar.gz)

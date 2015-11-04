@@ -1,6 +1,8 @@
 pkgname=rqdq-python2-virtualenv
 pkgver=13.1.2
-pkgrel=2
+pkgrel=3
+pkgdesc='Virtual Python Environment builder'
+url='https://pypi.python.org/pypi/virtualenv'
 _libname=virtualenv
 _prefix="opt/rqdq"
 depends=('rqdq-python2-libs = 2.7.10' 'rqdq-python2-setuptools')

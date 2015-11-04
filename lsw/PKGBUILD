@@ -1,6 +1,6 @@
 pkgname=lsw
 pkgver=0.3
-pkgrel=1
+pkgrel=2
 pkgdesc="List titles of all running X windows"
 url="http://tools.suckless.org/lsw/"
 license=('MIT')

@@ -1,7 +1,10 @@
 pkgbase=rqdq-libxml2
 pkgname=(rqdq-libxml2 rqdq-libxml2-devel rqdq-libxml2-python)
 pkgver=2.9.2
-pkgrel=6
+pkgrel=7
+pkgdesc='Library providing XML and HTML support'
+url='http://xmlsoft.org/'
+license=('MIT')
 makedepends=('zlib-devel' 'rqdq-python2-devel')
 source=(ftp://xmlsoft.org/libxml2/libxml2-${pkgver}.tar.gz \
         fix-duplicate-qname-message.patch)
@@ -34,7 +37,7 @@ package_rqdq-libxml2() {
   cd "libxml2-${pkgver}"
   install -d "$_dst"/{bin,lib,share/man/man1}
   cp -a "$_src"/bin/{xmlcatalog,xmllint} "$_dst"/bin/
-  cp -a "$_src"/lib/libxml2.so.2* "$_dst"/lib/
+  cp -a "$_src"/lib/libxml2.so.* "$_dst"/lib/
   cp -a "$_src"/share/man/man1/{xmlcatalog.1,xmllint.1} "$_dst"/share/man/man1/
   cp -a "$_src"/share/man/man3 "$_dst"/share/man/
 
@@ -49,12 +52,12 @@ package_rqdq-libxml2-devel() {
   local _dst="${pkgdir}/${_prefix}"
 
   cd "libxml2-${pkgver}"
-  install -d "$_dst"/{bin,include,lib,share/{aclocal,doc,man/man1}}
+  install -d "$_dst"/{bin,include,lib,share/{doc,man/man1}}
 
   cp -a "$_src"/bin/xml2-config "$_dst"/bin/
   cp -a "$_src"/include/libxml2 "$_dst"/include/
   cp -a "$_src"/lib/{libxml2.so,pkgconfig,xml2Conf.sh} "$_dst"/lib/
-  cp -a "$_src"/share/aclocal/libxml.m4 "$_dst"/share/aclocal/
+  cp -a "$_src"/share/aclocal "$_dst"/share/
   cp -a "$_src"/share/doc/libxml2-${pkgver} "$_dst"/share/doc/
   cp -a "$_src"/share/gtk-doc "$_dst"/share/
   cp -a "$_src"/share/man/man1/xml2-config.1 "$_dst"/share/man/man1/

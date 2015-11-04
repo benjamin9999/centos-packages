@@ -1,10 +1,12 @@
 pkgname=autocutsel
 pkgver=0.10.0
-pkgrel=1
+pkgrel=2
+pkgdesc="synchronizes the two copy/paste buffers mainly used by X applications"
 depends=('libXaw')
 makedepends=(libXaw-devel)
 source=(https://github.com/sigmike/autocutsel/releases/download/${pkgver}/autocutsel-${pkgver}.tar.gz)
 md5sums=('7d5b96e5f7b79b883d8350f104043366')
+license=('GPL')
 
 build() {
   cd "autocutsel-${pkgver}"

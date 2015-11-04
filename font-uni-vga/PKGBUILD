@@ -1,7 +1,9 @@
 pkgname=rqdq-font-uni-vga
 pkgver=1.0
-pkgrel=2
+pkgrel=3
+pkgdesc='Unicode VGA 8x16 font homepage in PCF format'
 arch=('any')
+url='http://www.inp.nsk.su/~bolkhov/files/fonts/univga/'
 install=font.install
 depends=('freetype2' 'xorg-x11-font-utils')
 makedepends=('xorg-x11-font-utils')

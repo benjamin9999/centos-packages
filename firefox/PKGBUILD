@@ -1,10 +1,13 @@
-pkgname=rqdq-firefox
-pkgver=41.0.2
+pkgname=firefox
+pkgver=42.0
 pkgrel=1
+pkgdesc='Standalone web browser from mozilla.org'
+license=('MPL' 'GPL' 'LGPL')
+url='http://mozilla.org/'
 depends=('dbus-x11')
 makedepends=()
-source=(https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest/linux-x86_64/en-US/firefox-${pkgver}.tar.bz2)
-md5sums=('f1e857e49d05e8d2df5c6df5a31f8053')
+source=(https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${pkgver}/linux-x86_64/en-US/firefox-${pkgver}.tar.bz2)
+md5sums=('9033e4ab8918e7a066f124eb10160bbe')
 
 package() {
   mkdir -p "${pkgdir}/opt/firefox-${pkgver}"

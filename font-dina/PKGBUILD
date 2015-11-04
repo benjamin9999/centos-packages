@@ -1,18 +1,20 @@
 pkgname=rqdq-font-dina
 pkgver=2.92
-pkgrel=1
+pkgrel=2
+pkgdesc='Dina Programming Font in PCF format'
 makedepends=('xorg-x11-font-utils')
+url='https://www.donationcoder.com/Software/Jibz/Dina/'
 arch=('any')
 install=font.install
 source=(https://www.donationcoder.com/Software/Jibz/Dina/downloads/Dina.zip)
 md5sums=('028424baac750e9fd0f54df03202e5d0')
 
 build() {
-    mkdir build
-    cd BDF
-    for bdf_source in *.bdf; do
-        bdftopcf -o "${srcdir}/build/${bdf_source%.bdf}.pcf" "$bdf_source"
-    done
+  mkdir build
+  cd BDF
+  for bdf_source in *.bdf; do
+    bdftopcf -o "${srcdir}/build/${bdf_source%.bdf}.pcf" "$bdf_source"
+  done
 }
 
 package() {
