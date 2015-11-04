@@ -1,0 +1,43 @@
+pkgname=('x264' 'libx264' 'libx264-devel')
+pkgver=148.20151001
+pkgrel=3
+url='http://www.videolan.org/developers/x264.html'
+license=('GPL')
+makedepends=('yasm')
+_commit=75992107adcc8317ba2888e3957a7d56f16b5cd4
+source=(git+git://git.videolan.org/x264#commit=${_commit})
+md5sums=('SKIP')
+
+build() {
+  cd "x264"
+  ./configure --prefix=/usr --libdir=/usr/lib64 --enable-shared
+  make
+}
+
+package_x264() {
+  pkgdesc='CLI tools for encoding H264/AVC video streams'
+  depends=('libx264')
+
+  cd "x264"
+  DESTDIR="$pkgdir" make install-cli
+}
+
+package_libx264() {
+  pkgdesc='Library for encoding H264/AVC video streams'
+
+  cd "x264"
+  DESTDIR="$pkgdir" make install
+  rm -rf "$pkgdir"/usr/bin
+  rm -rf "$pkgdir"/usr/include
+  rm -rf "$pkgdir"/usr/lib64/pkgconfig
+  rm -rf "$pkgdir"/usr/lib64/libx264.so
+}
+
+package_libx264-devel() {
+  pkgdesc='Library for encoding H264/AVC video streams'
+
+  cd "x264"
+  DESTDIR="$pkgdir" make install
+  rm -rf "$pkgdir"/usr/lib64/libx264.so.*
+  rm -rf "$pkgdir"/usr/bin
+}

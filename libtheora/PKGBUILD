@@ -1,0 +1,32 @@
+pkgname=('libtheora' 'libtheora-devel')
+pkgver=1.1.1
+pkgrel=1
+epoch=1
+pkgdesc='An open video codec developed by the Xiph.org'
+url='http://xiph.org/'
+license=('BSD')
+makedepends=()
+source=("http://downloads.xiph.org/releases/theora/libtheora-${pkgver}.tar.gz")
+sha256sums=('40952956c47811928d1e7922cda3bc1f427eb75680c3c37249c91e949054916b')
+
+build() {
+  cd libtheora-${pkgver}
+  ./configure --prefix=/usr --libdir=/usr/lib64 --enable-shared
+  make
+}
+
+package_libtheora() {
+  cd libtheora-${pkgver}
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/include
+  rm -rf "$pkgdir"/usr/lib64/*.{so,a,la}
+  rm -rf "$pkgdir"/usr/lib64/pkgconfig
+  rm -rf "$pkgdir"/usr/share/aclocal
+}
+
+package_libtheora-devel() {
+  cd libtheora-${pkgver}
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/lib64/*.so.*
+  rm -rf "$pkgdir"/usr/share/doc
+}

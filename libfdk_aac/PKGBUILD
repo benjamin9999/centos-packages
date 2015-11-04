@@ -1,0 +1,33 @@
+pkgname=('libfdk_aac' 'libfdk_aac-devel')
+pkgver=0.1.4
+pkgrel=2
+pkgdesc='Standalone library of the Fraunhofer FDK AAC codec from Android'
+url='https://github.com/mstorsjo/fdk-aac'
+makedepends=(libtool)
+source=("git+https://github.com/mstorsjo/fdk-aac.git#tag=v${pkgver}")
+md5sums=('SKIP')
+
+build() {
+  cd fdk-aac
+  autoreconf -fiv
+  ./configure --prefix=/usr --libdir=/usr/lib64 --enable-shared
+  make
+}
+
+package_libfdk_aac() {
+  cd fdk-aac
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/bin
+  rm -rf "$pkgdir"/usr/include
+  rm -rf "$pkgdir"/usr/lib64/pkgconfig
+  rm -rf "$pkgdir"/usr/lib64/*.so
+  rm -rf "$pkgdir"/usr/lib64/*.a
+  rm -rf "$pkgdir"/usr/lib64/*.la
+}
+
+package_libfdk_aac-devel() {
+  cd fdk-aac
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/bin
+  rm -rf "$pkgdir"/usr/lib64/*.so.*
+}

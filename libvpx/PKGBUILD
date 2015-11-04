@@ -1,0 +1,39 @@
+pkgname=('vpx' 'libvpx' 'libvpx-devel')
+pkgver=1.4.0
+pkgrel=3
+pkgdesc='webm vp8 & vp9 codec libraries'
+url='http://www.webmproject.org/'
+makedepends=('yasm')
+source=("libvpx::git+http://code.google.com/p/webm.libvpx#tag=v${pkgver}")
+md5sums=('SKIP')
+
+build() {
+  cd libvpx
+  ./configure --prefix=/usr --libdir=/usr/lib64 --enable-shared
+  make
+}
+
+package_vpx() {
+  depends=("libvpx = $pkgver-$pkgrel.$RPM_DIST")
+  cd libvpx
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/{lib64,include}
+}
+
+package_libvpx() {
+  cd libvpx
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/bin
+  rm -rf "$pkgdir"/usr/include
+  rm -rf "$pkgdir"/usr/lib64/*.{so,a,la}
+  rm -rf "$pkgdir"/usr/lib64/pkgconfig
+  rm -rf "$pkgdir"/usr/share/aclocal
+}
+
+package_libvpx-devel() {
+  cd libvpx
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/bin
+  rm -rf "$pkgdir"/usr/lib64/*.so.*
+  rm -rf "$pkgdir"/usr/share/doc
+}

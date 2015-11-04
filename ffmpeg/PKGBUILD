@@ -1,0 +1,38 @@
+pkgname=('ffmpeg')
+pkgver=2.8.1
+pkgrel=2
+pkgdesc="Universal multimedia toolkit"
+license=('GPL')
+url="http://ffmpeg.org/"
+depends=(libfdk_aac libmp3lame gsm opencore-amr libtheora libvpx libx264 libxvid)
+makedepends=(libfdk_aac-devel libmp3lame-devel gsm-devel opencore-amr-devel libtheora-devel libvpx-devel libx264-devel libxvid-devel)
+source=("ffmpeg::git+git://source.ffmpeg.org/ffmpeg#tag=n${pkgver}")
+md5sums=('SKIP')
+
+build() {
+  cd ffmpeg
+  ./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib64 \
+    --enable-version3 \
+    --enable-gpl \
+    --enable-libfdk_aac \
+    --enable-libmp3lame \
+    --enable-libtheora \
+    --enable-libvorbis \
+    --enable-libvpx \
+    --enable-libx264 \
+    --enable-nonfree \
+    --enable-libopencore-amrnb \
+    --enable-libopencore-amrwb \
+    --enable-libgsm \
+    --enable-libxvid \
+    --disable-static \
+    --enable-shared
+  make
+}
+
+package() {
+  cd ffmpeg
+  make DESTDIR="$pkgdir" install
+}

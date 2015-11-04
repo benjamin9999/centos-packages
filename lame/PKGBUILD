@@ -1,0 +1,40 @@
+pkgname=('lame' 'libmp3lame' 'libmp3lame-devel')
+pkgver=3.99.5
+pkgrel=2
+pkgdesc='High-quality MP3 encoder'
+url='http://lame.sourceforge.net/'
+license=('LGPL')
+makedepends=('nasm')
+source=("http://downloads.sf.net/project/lame/lame/3.99/lame-${pkgver}.tar.gz")
+md5sums=('84835b313d4a8b68f5349816d33e07ce')
+
+build() {
+  cd lame-$pkgver
+  ./configure --prefix=/usr --libdir=/usr/lib64 --enable-shared --enable-nasm
+  make
+}
+
+package_lame() {
+  depends=(ncurses-libs "libmp3lame = $pkgver")
+  cd lame-$pkgver
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/include
+  rm -rf "$pkgdir"/usr/lib64
+}
+
+package_libmp3lame() {
+  depends=()
+  cd lame-$pkgver
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/{include,bin,share}
+  rm -rf "$pkgdir"/usr/lib64/*.{a,la,so}
+}
+
+package_libmp3lame-devel() {
+  depends=("libmp3lame = $pkgver")
+  cd lame-$pkgver
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/bin
+  rm -rf "$pkgdir"/usr/share
+  rm -rf "$pkgdir"/usr/lib64/*.so.*
+}

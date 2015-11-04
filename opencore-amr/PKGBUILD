@@ -1,0 +1,28 @@
+pkgname=('opencore-amr' 'opencore-amr-devel')
+pkgver=0.1.2
+pkgrel=2
+pkgdesc='Audio codecs extracted from the Android Open Source Project'
+url='http://sourceforge.net/projects/opencore-amr/'
+makedepends=()
+source=("http://downloads.sf.net/project/opencore-amr/opencore-amr/${pkgver}/opencore-amr-${pkgver}.tar.gz")
+md5sums=('8e8b8b253eb046340ff7b6bf7a6ccd3e')
+
+build() {
+  cd opencore-amr-${pkgver}
+  ./configure --prefix=/usr --libdir=/usr/lib64
+  make
+}
+
+package_opencore-amr() {
+  cd opencore-amr-${pkgver}
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/include
+  rm -rf "$pkgdir"/usr/lib64/*.{so,a,la}
+  rm -rf "$pkgdir"/usr/lib64/pkgconfig
+}
+
+package_opencore-amr-devel() {
+  cd opencore-amr-${pkgver}
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/lib64/*.so.*
+}

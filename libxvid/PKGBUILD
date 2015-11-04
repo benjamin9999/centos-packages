@@ -1,0 +1,25 @@
+pkgname=('libxvid' 'libxvid-devel')
+pkgver=1.3.2
+pkgrel=3
+makedepends=()
+source=("http://downloads.xvid.org/downloads/xvidcore-${pkgver}.tar.gz")
+md5sums=('87c8cf7b69ebed93c2d82ea5709d098a')
+
+build() {
+  cd xvidcore/build/generic
+  ./configure --prefix=/usr --libdir=/usr/lib64
+  make
+}
+
+package_libxvid() {
+  cd xvidcore/build/generic
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/include
+  rm -rf "$pkgdir"/usr/lib64/*.a
+}
+
+package_libxvid-devel() {
+  cd xvidcore/build/generic
+  make DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/usr/lib64/libxvidcore.so.*
+}
