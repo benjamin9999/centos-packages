@@ -1,0 +1,22 @@
+pkgname=youtube-dl
+https://github.com/rg3/youtube-dl/archive/2015.11.02.tar.gz
+pkgver=2015.11.02
+pkgrel=1
+pkgdesc='A small command-line program to download videos from YouTube.com and a few more sites'
+url='http://rg3.github.io/youtube-dl'
+depends=('python = 2.6.6')
+makedepends=()
+arch=('any')
+source=("https://github.com/rg3/youtube-dl/archive/${pkgver}.tar.gz")
+md5sums=('c79113652bb925fd582151c218b07820')
+
+build() {
+  cd youtube-dl-${pkgver}
+  python setup.py build
+}
+
+package() {
+  cd youtube-dl-${pkgver}
+  python setup.py install --skip-build -O1 --root="$pkgdir"
+  rm -rf "$pkgdir"/usr/etc
+}
