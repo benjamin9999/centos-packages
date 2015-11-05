@@ -1,7 +1,8 @@
-pkgname=rqdq-font-classic-console
+pkgname=font-classic-console
 pkgver=1.0
-pkgrel=2
+pkgrel=3
 pkgdesc='ASCII VGA 8x16 reproduction TrueType font'
+depends=()
 makedepends=()
 arch=('any')
 install=font.install

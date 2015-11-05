@@ -1,7 +1,8 @@
-pkgname=rqdq-font-dina
+pkgname=font-dina
 pkgver=2.92
-pkgrel=2
+pkgrel=3
 pkgdesc='Dina Programming Font in PCF format'
+depends=()
 makedepends=('xorg-x11-font-utils')
 url='https://www.donationcoder.com/Software/Jibz/Dina/'
 arch=('any')
