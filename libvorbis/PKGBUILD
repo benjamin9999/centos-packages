@@ -1,4 +1,4 @@
-pkgname=('rqdq-libvorbis' 'rqdq-libvorbis-devel')
+pkgname=('libvorbis' 'libvorbis-devel')
 pkgver=1.3.4
 pkgrel=1
 epoch=1
@@ -12,7 +12,7 @@ build() {
   make
 }
 
-package_rqdq-libvorbis() {
+package_libvorbis() {
   cd libvorbis-${pkgver}
   make DESTDIR="$pkgdir" install
   rm -rf "$pkgdir"/usr/include
@@ -21,7 +21,7 @@ package_rqdq-libvorbis() {
   rm -rf "$pkgdir"/usr/share/aclocal
 }
 
-package_rqdq-libvorbis-devel() {
+package_libvorbis-devel() {
   cd libvorbis-${pkgver}
   make DESTDIR="$pkgdir" install
   rm -rf "$pkgdir"/usr/lib64/*.so.*

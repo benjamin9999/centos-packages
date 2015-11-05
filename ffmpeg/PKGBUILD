@@ -1,11 +1,11 @@
-pkgname=('ffmpeg')
+pkgname='ffmpeg'
 pkgver=2.8.1
-pkgrel=2
+pkgrel=4
 pkgdesc="Universal multimedia toolkit"
 license=('GPL')
 url="http://ffmpeg.org/"
-depends=(libfdk_aac libmp3lame gsm opencore-amr libtheora libvpx libx264 libxvid)
-makedepends=(libfdk_aac-devel libmp3lame-devel gsm-devel opencore-amr-devel libtheora-devel libvpx-devel libx264-devel libxvid-devel)
+depends=(libfdk_aac libmp3lame gsm opencore-amr libtheora libvpx libx264 libxvid libvorbis libogg)
+makedepends=(libfdk_aac-devel libmp3lame-devel gsm-devel opencore-amr-devel libtheora-devel libvpx-devel libx264-devel libxvid-devel libvorbis-devel libogg-devel)
 source=("ffmpeg::git+git://source.ffmpeg.org/ffmpeg#tag=n${pkgver}")
 md5sums=('SKIP')
 
