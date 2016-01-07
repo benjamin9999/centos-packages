@@ -1,12 +1,12 @@
 pkgname=pycharm
-pkgver=5.0.2
+pkgver=5.0.3
 pkgrel=1
 pkgdesc='Powerful Python and Django IDE'
 url='http://www.jetbrains.com/pycharm/'
 depends=('java-1.8.0-openjdk')
 makedepends=()
 source=(http://download.jetbrains.com/python/pycharm-professional-${pkgver}.tar.gz)
-sha256sums=('1f98d4c7d1daca6d12734617af622fba0b6aa3e2e7b5d04195e905e099e6ac21')
+sha256sums=('b427ff88079230a1b7f92db044b3382d7dc080e49fbce57e6871587b0c4a4fec')
 
 package() {
   mkdir -p $pkgdir/opt
