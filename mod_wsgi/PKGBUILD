@@ -1,10 +1,10 @@
 pkgname=rqdq-mod_wsgi
-pkgver=4.4.13
-pkgrel=4
-depends=('rqdq-python2-libs = 2.7.10' 'httpd = 2.2.15')
+pkgver=4.4.21
+pkgrel=1
+depends=('rqdq-python2-libs = 2.7.11' 'httpd = 2.2.15')
 makedepends=('httpd-devel' 'rqdq-python2-devel')
 source=(https://github.com/GrahamDumpleton/mod_wsgi/archive/${pkgver}.tar.gz)
-md5sums=('69de4d90e1c47ca66ca227b009332a76')
+md5sums=('c0c9cdcd607672b0fb2ba2c2b3cd92fb')
 
 _prefix="opt/rqdq"
 
