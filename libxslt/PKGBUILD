@@ -1,10 +1,11 @@
 pkgbase=rqdq-libxslt
 pkgname=(rqdq-libxslt rqdq-libxslt-devel rqdq-libxslt-python)
 pkgver=1.1.28
+pkgrel=9
 pkgdesc='Library providing the Gnome XSLT Engine'
-pkgrel=7
 url='http://xmlsoft.org/'
-makedepends=('rqdq-libxml2-devel' 'rqdq-libxml2-python')
+license=('MIT')
+makedepends=('rqdq-libxml2-devel' 'rqdq-libxml2-python' 'rqdq-python2' 'rqdq-python2-devel')
 source=(ftp://xmlsoft.org/XSLT/libxslt-${pkgver}.tar.gz)
 md5sums=('9667bf6f9310b957254fdcf6596600b7')
 
@@ -12,15 +13,18 @@ _prefix="opt/rqdq"
 
 build() {
   cd "libxslt-${pkgver}"
-  PATH=/opt/rqdq/bin:$PATH ./configure --prefix=/${_prefix} --with-python=/${_prefix}/bin/python --with-libxml-prefix=/${_prefix}
+  PATH=/opt/rqdq/bin:$PATH ./configure \
+    --with-python=/${_prefix}/bin/python \
+    --with-libxml-prefix=/${_prefix} \
+    --prefix=/${_prefix}
   LIBRARY_PATH=/opt/rqdq/lib:$LIBRARY_PATH make -j2
 
-  mkdir -p "$srcdir"/build
+  mkdir -p "${srcdir}/build"
   DESTDIR="${srcdir}/build" make install
 }
 
 package_rqdq-libxslt() {
-  depends=('zlib' "rqdq-libxml2 = 2.9.2-6.${RPM_DIST}")
+  depends=('zlib' "rqdq-libxml2 = 2.9.2-7.${RPM_DIST}")
   install=libxslt.install
 
   local _src="${srcdir}/build/${_prefix}"
@@ -33,7 +37,7 @@ package_rqdq-libxslt() {
   cp -a "$_src"/lib/{libexslt.so.0*,libxslt.so.1*} "$_dst"/lib/
   cp -a "$_src"/share/man/man1 "$_dst"/share/man/
 
-  mkdir -p "${pkgdir}/etc/ld.so.conf.d"
+  install -d "${pkgdir}/etc/ld.so.conf.d"
   echo "/${_prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
 }
 
@@ -55,7 +59,7 @@ package_rqdq-libxslt-devel() {
 }
 
 package_rqdq-libxslt-python() {
-  depends=("${pkgbase} = ${pkgver}-${pkgrel}.${RPM_DIST}" 'rqdq-python2-libs = 2.7.10')
+  depends=("${pkgbase} = ${pkgver}-${pkgrel}.${RPM_DIST}" 'rqdq-python2-libs = 2.7.11')
 
   local _src="${srcdir}/build/${_prefix}"
   local _dst="${pkgdir}/${_prefix}"
@@ -64,5 +68,5 @@ package_rqdq-libxslt-python() {
 
   install -d "$_dst"/{lib,share/doc}
   cp -a "$_src"/lib/python2.7 "$_dst"/lib/
-  cp -a "$_src"/share/doc/libxslt-python-$pkgver "$_dst"/share/doc/
+  cp -a "$_src"/share/doc/libxslt-python-${pkgver} "$_dst"/share/doc/
 }
