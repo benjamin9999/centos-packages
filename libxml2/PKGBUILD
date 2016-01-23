@@ -1,7 +1,7 @@
 pkgbase=rqdq-libxml2
 pkgname=(rqdq-libxml2 rqdq-libxml2-devel rqdq-libxml2-python)
 pkgver=2.9.2
-pkgrel=7
+pkgrel=8
 pkgdesc='Library providing XML and HTML support'
 url='http://xmlsoft.org/'
 license=('MIT')
@@ -67,7 +67,7 @@ package_rqdq-libxml2-devel() {
 }
 
 package_rqdq-libxml2-python() {
-  depends=("${pkgbase} = ${pkgver}-${pkgrel}.${RPM_DIST}" 'rqdq-python2-libs = 2.7.10')
+  depends=("${pkgbase} = ${pkgver}-${pkgrel}.${RPM_DIST}" 'rqdq-python2-libs = 2.7.11')
 
   local _src="${srcdir}/build/${_prefix}"
   local _dst="${pkgdir}/${_prefix}"
