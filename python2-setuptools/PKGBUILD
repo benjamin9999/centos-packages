@@ -1,15 +1,15 @@
 pkgname=rqdq-python2-setuptools
-pkgver=18.3.2
-pkgrel=4
+pkgver=19.4
+pkgrel=1
 pkgdesc='Easily download, build, install, upgrade, and uninstall Python packages'
 url='https://pypi.python.org/pypi/setuptools'
 _libname=setuptools
 _prefix="opt/rqdq"
-depends=("rqdq-python2-libs = 2.7.10")
+depends=("rqdq-python2-libs = 2.7.11")
 makedepends=()
 arch=('any')
 source=(http://pypi.python.org/packages/source/${_libname:0:1}/$_libname/$_libname-$pkgver.tar.gz)
-md5sums=('d30c969065bd384266e411c446a86623')
+md5sums=('c5a7d90c1e0acf8c4ec5c2bf31bc25b5')
 
 build() {
   cd "$srcdir/$_libname-$pkgver"

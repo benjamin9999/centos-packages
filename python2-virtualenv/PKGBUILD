@@ -1,15 +1,15 @@
 pkgname=rqdq-python2-virtualenv
-pkgver=13.1.2
-pkgrel=3
+pkgver=14.0.1
+pkgrel=1
 pkgdesc='Virtual Python Environment builder'
 url='https://pypi.python.org/pypi/virtualenv'
 _libname=virtualenv
 _prefix="opt/rqdq"
-depends=('rqdq-python2-libs = 2.7.10' 'rqdq-python2-setuptools')
+depends=('rqdq-python2-libs = 2.7.11' 'rqdq-python2-setuptools')
 makedepends=()
 arch=('any')
 source=(http://pypi.python.org/packages/source/${_libname:0:1}/$_libname/$_libname-$pkgver.tar.gz)
-md5sums=('b989598f068d64b32dead530eb25589a')
+md5sums=('687b2c8ff325c97c37c365f68b0ae975')
 
 build() {
   cd "$srcdir/$_libname-$pkgver"
