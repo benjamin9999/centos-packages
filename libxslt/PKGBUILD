@@ -1,7 +1,7 @@
 pkgbase=rqdq-libxslt
 pkgname=(rqdq-libxslt rqdq-libxslt-devel rqdq-libxslt-python)
 pkgver=1.1.28
-pkgrel=9
+pkgrel=10
 pkgdesc='Library providing the Gnome XSLT Engine'
 url='http://xmlsoft.org/'
 license=('MIT')
@@ -24,7 +24,7 @@ build() {
 }
 
 package_rqdq-libxslt() {
-  depends=('zlib' "rqdq-libxml2 = 2.9.2-7.${RPM_DIST}")
+  depends=('zlib' "rqdq-libxml2 = 2.9.2-8.${RPM_DIST}")
   install=libxslt.install
 
   local _src="${srcdir}/build/${_prefix}"
