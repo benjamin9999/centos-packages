@@ -1,0 +1,59 @@
+pkgbase=rqdq-python3
+pkgname=(rqdq-python3 rqdq-python3-libs rqdq-python3-devel)
+pkgver=3.5.1
+pkgrel=1
+pkgdesc='An interpreted, interactive, object-oriented programming language'
+url='http://python.org/'
+makedepends=('zlib-devel' 'openssl-devel' 'libffi-devel' 'readline-devel' 'bzip2-devel' 'sqlite-devel')
+source=(http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tgz)
+md5sums=('be78e48cdfc1a7ad90efff146dce6cfe')
+
+_prefix="opt/rqdq"
+
+build() {
+  cd "Python-${pkgver}"
+  ./configure --enable-shared --prefix=/${_prefix}
+  make -j2
+
+  mkdir -p "${srcdir}/build"
+  DESTDIR="${srcdir}/build" make install
+}
+
+package_rqdq-python3() {
+  #depends=("${pkgbase}-libs=${pkgver}")
+  depends=("${pkgbase}-libs = ${pkgver}-${pkgrel}.${RPM_DIST}")
+
+  local src="${srcdir}/build/${_prefix}"
+  local dest="${pkgdir}/${_prefix}"
+
+  mkdir -p $dest/bin
+  mkdir -p $dest/share
+
+  cp -a $src/bin/{python3,python3.5,python3.5m,2to3*,easy_install*,idle3*,pip3*,pydoc3*,pyvenv*} $dest/bin/
+  cp -a $src/share/man $dest/share/
+}
+
+package_rqdq-python3-libs() {
+  depends=('zlib' 'openssl', 'libffi' 'readline' 'bzip2')
+  install='python3-libs.install'
+
+  local src="${srcdir}/build/${_prefix}"
+  local dest="${pkgdir}/${_prefix}"
+
+  mkdir -p $dest/lib $dest/include/python3.5m
+  cp -a "$src/include/python3.5m/pyconfig.h" "$dest/include/python3.5m/pyconfig.h"
+  cp -a "$src/lib/libpython3.5m.so.1.0" "$dest/lib/"
+  cp -a "$src/lib/python3.5" "$dest/lib/"
+
+  mkdir -p "${pkgdir}/etc/ld.so.conf.d"
+  echo "/${_prefix}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
+}
+
+package_rqdq-python3-devel() {
+  depends=("${pkgbase}-libs = ${pkgver}-${pkgrel}.${RPM_DIST}")
+
+  mkdir -p "${pkgdir}/${_prefix}"/{bin,include,lib}
+  cp -a "${srcdir}/build/${_prefix}/bin"/python*-config "${pkgdir}/${_prefix}/bin/"
+  cp -a "${srcdir}/build/${_prefix}/include/python3.5m" "${pkgdir}/${_prefix}/include/"
+  cp -a "${srcdir}/build/${_prefix}/lib/libpython3.5m.so" "${pkgdir}/${_prefix}/lib/"
+}
