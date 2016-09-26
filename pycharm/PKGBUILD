@@ -1,12 +1,12 @@
 pkgname=pycharm
-pkgver=2016.1.4
+pkgver=2016.2.3
 pkgrel=1
 pkgdesc='Powerful Python and Django IDE'
 url='http://www.jetbrains.com/pycharm/'
 depends=('java-1.8.0-openjdk')
 makedepends=()
-source=(http://download.jetbrains.com/python/pycharm-professional-${pkgver}.tar.gz)
-sha256sums=('47323791c67105b2ce57a531d8965915186b9f19f4e234e65c4b3dca31c87333')
+source=(https://download.jetbrains.com/python/pycharm-professional-${pkgver}.tar.gz)
+sha256sums=('a1eef156cc56eb3a36b437684b68b2e16f2575b5f1245a617eceb8352f6f4f5e')
 
 
 package() {
