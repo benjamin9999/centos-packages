@@ -1,5 +1,5 @@
 diff --git a/Jamsettings b/Jamsettings
-index 6ad07ee..114c295 100644
+index 6ad07ee..c1b66a5 100644
 --- a/Jamsettings
 +++ b/Jamsettings
 @@ -12,7 +12,7 @@ INSTALLROOT ?= "" ;
@@ -16,12 +16,12 @@ index 6ad07ee..114c295 100644
  # The directory where the man pages are installed
  #
 -MANDIR = $(PREFIX)/man ;
-+MANDIR = $(PREFIX)/share/man ;
++MANDIR = /usr/share/man ;
  
  # Supporting files
  #
 -LIBDIR = $(PREFIX)/lib ;
-+LIBDIR = $(PREFIX)/lib/archiveopteryx ;
++LIBDIR = $(PREFIX)/lib/aox ;
  
  # The startup/shutdown script's directory
  #
@@ -36,7 +36,7 @@ index 6ad07ee..114c295 100644
  # startup.
  #
 -JAILDIR = $(PREFIX)/jail ;
-+JAILDIR = /var/run/aox/jail ;
++JAILDIR = /var/spool/aox/jail ;
  
  # This is the default message-copy-directory.
  #
@@ -45,12 +45,23 @@ index 6ad07ee..114c295 100644
  # The directory where the configuration file is located.
  #
 -CONFIGDIR = $(PREFIX) ;
-+CONFIGDIR = /etc ;
++CONFIGDIR = /etc/aox ;
  
  # The directory where the README and other files are installed.
  #
 -READMEDIR = $(PREFIX) ;
-+READMEDIR = /usr/share/doc/archiveopteryx ;
++READMEDIR = /usr/lib/aox ;
  
  # The log file's default name. (This can be a file name or syslog/x,
  # where x is a facility.)
+@@ -71,8 +71,8 @@ AOXGROUP ?= aox ;
+ 
+ # How to compile
+ 
+-C++FLAGS = -g -funsigned-char ;
+-LINKFLAGS = -g ;
++C++FLAGS = -O2 -funsigned-char ;
++LINKFLAGS =  ;
+ 
+ # Mode for installed binaries
+ 
