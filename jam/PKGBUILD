@@ -1,0 +1,13 @@
+pkgname=jam
+pkgver=2.5
+pkgrel=1
+pkgdesc='Jam Build Tool'
+arch=('x86_64')
+# I can't recall where I found this copy of jam, but it works
+source=(jam64)
+md5sums=('852730f7e71fc89c1916ad4a0fa1b029')
+
+package() {
+  mkdir -p "$pkgdir"/usr/bin
+  install -m 0755 "$srcdir"/jam64 "$pkgdir"/usr/bin/jam
+}
