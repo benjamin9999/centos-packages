@@ -1,6 +1,6 @@
 pkgname=archiveopteryx-git
 pkgver=20160927
-pkgrel=2
+pkgrel=4
 url='http://archiveopteryx.org/'
 pkgdesc='PostgreSQL email storage with IMAP access and more'
 license=('BSD')
@@ -8,10 +8,12 @@ depends=('openssl' 'zlib')
 makedepends=('jam' 'openssl-devel' 'zlib-devel')
 source=($pkgname::git+https://github.com/aox/aox#commit=a2c3d76
         jamsettings.patch
-	archiveopteryx.conf)
+	archiveopteryx.conf
+	aox-vacuum.cron)
 md5sums=('SKIP'
          '1c535d08ad516f66267efa6ebf4c5705'
-         '52e04089f8135200dc91e15420c8718a')
+         '52e04089f8135200dc91e15420c8718a'
+         '686f77a7c90b03380fc0be2e1571c03c')
  
 prepare() {
   cd "$pkgname"
@@ -27,4 +29,12 @@ package() {
   cd "$pkgname"
   INSTALLROOT="$pkgdir" jam install
   install -m 0644 "$srcdir"/archiveopteryx.conf "$pkgdir"/etc/aox/
+
+  mkdir -p "$pkgdir"/etc/cron.daily
+  install -m 0755 "$srcdir"/aox-vacuum.cron "$pkgdir"/etc/cron.daily/
+
+  mkdir -p "$pkgdir"/usr/share/doc/archiveopteryx
+  for fn in COPYING license.txt README; do
+    mv "$pkgdir"/usr/lib/aox/$fn "$pkgdir"/usr/share/doc/archiveopteryx/
+  done
 }
