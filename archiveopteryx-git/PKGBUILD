@@ -1,12 +1,12 @@
 pkgname=archiveopteryx-git
-pkgver=20160927
-pkgrel=4
+pkgver=2016.11.16
+pkgrel=1
 url='http://archiveopteryx.org/'
 pkgdesc='PostgreSQL email storage with IMAP access and more'
 license=('BSD')
 depends=('openssl' 'zlib')
 makedepends=('jam' 'openssl-devel' 'zlib-devel')
-source=($pkgname::git+https://github.com/aox/aox#commit=a2c3d76
+source=($pkgname::git+https://github.com/aox/aox#commit=7984919
         jamsettings.patch
 	archiveopteryx.conf
 	aox-vacuum.cron)
